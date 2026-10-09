@@ -1,0 +1,41 @@
+@startuml
+title Planned Zeest ablation protocol
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam componentStyle rectangle
+
+package "Shared planned evaluation inputs" {
+  [Frozen case set] as cases
+  [Reference judgement process] as refs
+  [Common scoring rubric] as rubric
+}
+
+package "Variants under comparison" {
+  [Single LLM baseline] as baseline
+  [Memory-augmented variant] as memory
+  [Full Zeest system] as full
+}
+
+package "Controlled contrasts" {
+  [With vs without critic review] as critic
+  [Text-only vs multimodal inputs] as multimodal
+  [With vs without cited evidence] as evidence
+}
+
+[Recorded outputs and configurations] as outputs
+[Comparison report: NOT EXECUTED until evaluation] as report
+
+cases --> baseline
+cases --> memory
+cases --> full
+refs --> rubric
+baseline --> outputs
+memory --> outputs
+full --> outputs
+critic --> outputs
+multimodal --> outputs
+evidence --> outputs
+outputs --> rubric
+rubric --> report
+@enduml

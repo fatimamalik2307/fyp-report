@@ -1,0 +1,44 @@
+@startuml
+title Proposed Zeest methodology pipeline
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam activity {
+  BorderColor #2F3A4A
+  BackgroundColor #F8FBFF
+  DiamondBackgroundColor #FFF7D6
+  DiamondBorderColor #8A6D00
+}
+
+start
+:Physician selects patient and encounter;
+:Capture consultation audio and clinical inputs;
+:Transcribe audio into structured notes;
+:Physician reviews and corrects notes;
+
+fork
+  :Patient Memory Agent retrieves relevant longitudinal history;
+fork again
+  :Imaging Agent analyses supported image with existing validated model;
+fork again
+  :Laboratory Agent prepares laboratory findings;
+fork again
+  :Medication Safety Agent reviews medication context;
+end fork
+
+:Clinical Case Agent combines current inputs, history and specialist findings;
+:Evidence and RAG Agent retrieves cited clinical evidence;
+:Clinical Reasoning Agent drafts diagnosis and treatment plan;
+:Safety and Critic Agent reviews support and consistency;
+
+if (Physician decision?) then (approve)
+  :Record approved revision as clinical decision;
+elseif (modify)
+  :Save revised draft and audit action;
+  :Return revised draft for explicit approval;
+else (reject)
+  :Record rejection in audit history;
+endif
+
+stop
+@enduml

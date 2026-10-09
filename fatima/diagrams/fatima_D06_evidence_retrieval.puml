@@ -1,0 +1,35 @@
+@startuml
+title Planned evidence retrieval flow
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam activity {
+  BorderColor #2F3A4A
+  BackgroundColor #F8FBFF
+  DiamondBackgroundColor #FFF7D6
+  DiamondBorderColor #8A6D00
+}
+
+start
+:Prepare patient-specific case context;
+note right
+Includes current notes, relevant history,
+specialist findings and missing-input status.
+end note
+:Create retrieval query from case context;
+:Search selected external clinical sources;
+:Rank and filter candidate passages;
+
+if (Relevant cited evidence found?) then (yes)
+  :Attach source references and supporting passages;
+  :Provide evidence to Clinical Reasoning Agent;
+  :Display citations beside clinical draft;
+else (no)
+  :Mark evidence as insufficient or unavailable;
+  :Prevent unsupported evidence claims;
+endif
+
+:Safety and Critic Agent checks draft support;
+:Physician reviews draft, evidence and critic findings;
+stop
+@enduml
