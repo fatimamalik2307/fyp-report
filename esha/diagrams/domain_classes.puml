@@ -1,0 +1,104 @@
+@startuml esha_D09_domain_classes
+skinparam dpi 300
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam defaultFontName Arial
+skinparam defaultFontSize 14
+hide methods
+skinparam linetype ortho
+top to bottom direction
+package "Accounts and clinical sources" {
+class Physician {
+  physician_id : UUID
+}
+class Patient {
+  patient_id : UUID
+  physician_id : UUID
+}
+class Encounter {
+  encounter_id : UUID
+  patient_id : UUID
+}
+class ClinicalInput {
+  input_id : UUID
+  encounter_id : UUID
+}
+class InputRevision {
+  input_id : UUID
+  revision_no : integer
+}
+class SpecialistFinding {
+  finding_id : UUID
+}
+}
+package "Drafts and evidence" {
+class Proposal {
+  proposal_id : UUID
+  encounter_id : UUID
+}
+class ProposalRevision {
+  proposal_id : UUID
+  revision_no : integer
+}
+class ProposalInput {
+  proposal_id : UUID
+  proposal_revision : integer
+}
+class CriticReview {
+  critic_id : UUID
+}
+class EvidenceItem {
+  evidence_id : UUID
+}
+class ProposalEvidence {
+  proposal_id : UUID
+  proposal_revision : integer
+}
+}
+package "Review and memory" {
+class PhysicianAction {
+  action_id : UUID
+  physician_id : UUID
+}
+class ClinicalDecision {
+  decision_id : UUID
+}
+class SemanticMemory {
+  memory_id : UUID
+  decision_id : UUID
+}
+}
+package "Research evaluation" {
+class EvaluationCase {
+  case_id : UUID
+  encounter_id : UUID
+}
+class EvaluationRun {
+  run_id : UUID
+}
+class EvaluationOutput {
+  output_id : UUID
+}
+}
+Physician "1" -- "0..N" Patient : owns
+Patient "1" -- "0..N" Encounter : has
+Encounter "1" -- "0..N" ClinicalInput : contains
+ClinicalInput "1" -- "1..N" InputRevision : versions
+InputRevision "1" -- "0..N" SpecialistFinding : analysed by
+Encounter "1" -- "0..N" Proposal : produces
+Proposal "1" -- "1..N" ProposalRevision : versions
+ProposalRevision "1" -- "0..N" ProposalInput : uses
+InputRevision "1" -- "0..N" ProposalInput : supplies
+ProposalRevision "1" -- "0..N" CriticReview : assessed by
+ProposalRevision "1" -- "0..N" ProposalEvidence : supports
+EvidenceItem "1" -- "0..N" ProposalEvidence : linked by
+Physician "1" -- "0..N" PhysicianAction : performs
+ProposalRevision "1" -- "0..N" PhysicianAction : reviewed in
+PhysicianAction "1" -- "0..1" ClinicalDecision : authorises
+ProposalRevision "1" -- "0..1" ClinicalDecision : accepted as
+InputRevision "0..1" -- "0..N" SemanticMemory : represented by
+ClinicalDecision "0..1" -- "0..N" SemanticMemory : represented by
+Encounter "1" -- "0..N" EvaluationCase : provides
+EvaluationCase "1" -- "0..N" EvaluationOutput : evaluated in
+EvaluationRun "1" -- "0..N" EvaluationOutput : records
+@enduml

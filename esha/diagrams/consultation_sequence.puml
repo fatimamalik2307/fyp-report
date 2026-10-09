@@ -1,0 +1,33 @@
+@startuml esha_D10_consultation_sequence
+skinparam dpi 300
+skinparam shadowing false
+skinparam defaultFontName Arial
+autonumber
+actor Physician
+participant "Web interface" as UI
+participant "Application gateway" as API
+participant "Transcription" as STT
+participant "Agent orchestrator" as Agents
+database "Patient records" as Store
+Physician -> UI : Start and stop consultation capture (UC07)
+UI -> API : Audio for owned patient and encounter
+API -> STT : Transcribe supported audio
+STT --> UI : Structured notes for inspection
+Physician -> UI : Correct and save notes (UC08)
+UI -> API : Save InputRevision
+API -> Store : Store authorised source revision
+Physician -> UI : Submit supported clinical inputs (UC09-UC11)
+UI -> API : Validate sources and ownership
+Physician -> UI : Request clinical draft (UC13)
+API -> Agents : Saved source revisions and case context
+Agents -> Store : Retrieve selected patient's history (FR24)
+Store --> Agents : Source-aware context
+Agents -> Agents : Case preparation and specialist analysis
+Agents -> Agents : Retrieve cited evidence (FR32)
+Agents -> Agents : Diagnosis and treatment draft (FR33-FR34)
+Agents -> Agents : Critic findings before presentation (FR35)
+Agents -> Store : Save pending revision, evidence and critic links
+Agents --> UI : Draft, citations, findings and stage status
+UI --> Physician : Review draft, evidence and critic findings (UC13-UC15)
+note over UI, Store : A pending draft is not an accepted clinical decision.
+@enduml

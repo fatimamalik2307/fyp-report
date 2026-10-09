@@ -4,7 +4,7 @@ skinparam backgroundColor #FFFFFF
 skinparam shadowing false
 skinparam defaultFontName "Helvetica", "Arial", sans-serif
 skinparam defaultFontSize 14
-skinparam dpi 160
+skinparam dpi 300
 skinparam nodesep 30
 skinparam ranksep 30
 
@@ -73,7 +73,7 @@ CriticAgent --> Engine : reviewed package
 
 note right of Engine
   Scheduling and failure handling remain proposed.
-  Chapter Table T14 contains the full contracts.
+  Agent contracts identify inputs, outputs and source context.
 end note
 
 @enduml

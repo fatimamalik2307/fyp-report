@@ -171,3 +171,11 @@ Final report compiles to 95 pages with no overfull boxes, oversized floats, miss
 ## Feedback audit, 8 October 2026
 
 Read all three feedback pages and audited Chapters 1/2/4, with read-only checks of supplementary drafts/front matter. FEEDBACK_REVIEW.md records confirmed defects, passes, conflicts and proposed corrections. Several mistakes remain despite a clean compile. No report text, images, bibliography, shared files or other members' files changed during this audit.
+
+## Approved final integration, 10 October 2026
+
+Final integration covered Chapters 1/2/4, Executive Summary and Appendix. Ordinary prose is one 150-word paragraph per heading; short table introductions and cells are exempt. The Abstract retains its special limit. The six red blocks were reviewed individually: implementation/evaluation status remains in Chapter 1 purpose, performance requirements, GUI description, database configuration, risk conclusion and Chapter 6 design wording. No results were invented.
+
+The eighteen-entity dictionary retains all attributes and nullability in a combined Constraints column. Both screen-thumbnail and Physician/Zeest swimlane navigation remain. GUI exports are genuine 2x browser screenshots of static mockups. The SDG display isolates Goal 3 while preserving the original grid asset. Appendix A replaces unrelated demonstrations with objective traceability and configuration decisions.
+
+No commit or push was performed. main.tex is frozen again after this integration. Degree BS(CS) and date 10 October 2026 are assumptions to confirm before submission; signature spaces were preserved.

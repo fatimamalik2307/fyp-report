@@ -1,10 +1,10 @@
 # Zeest report plan: R&D Deliverable II
 
-Scope approved by the user on 4 October 2026: Chapters 1 through 6, compulsory Abstract, Executive Summary and References, plus an included Appendix. This supersedes the earlier full-template applicability and workload plan. Chapters 7 through 10 are archived outside the repository; do not write or assemble them for this deliverable. No project prose has been written.
+Scope approved by the user on 4 October 2026: Chapters 1 through 6, compulsory Abstract, Executive Summary and References, plus an included Appendix. This supersedes the earlier full-template applicability and workload plan. Chapters 7 through 10 are archived outside the repository; do not write or assemble them for this deliverable. The approved full-report finalisation is complete as of 10 October 2026; the prototype remains unbuilt.
 
 ## Sources and rules
 
-F26-098.docx alone supplies project facts. The user-supplied Deliverable II instruction controls current chapter inclusion; template/class/rules control the retained headings and formatting. Sample reports guide presentation only. Read README.md, Rules.txt and your START_HERE.md. Never edit FastFyp.cls or add packages. main.tex is frozen after this scope change. Keep ordinary paragraphs 150 to 250 words; Abstract is one paragraph of 50 to 125 words and three to five sentences. Executive Summary is one to two pages of plain prose.
+F26-098.docx alone supplies project facts. The user-supplied Deliverable II instruction controls current chapter inclusion; template/class/rules control the retained headings and formatting. Sample reports guide presentation only. Read README.md, Rules.txt and your START_HERE.md. Never edit FastFyp.cls or add packages. main.tex is frozen after this scope change. The latest approved rule is one 150-word substantive paragraph per heading, with brief table introductions, captions, cells and bullets exempt; Abstract is one paragraph of 50 to 125 words and three to five sentences. Executive Summary is one plain 150-word paragraph under the latest instruction.
 
 ## Chapter list and ownership
 
@@ -175,3 +175,5 @@ If a diagram/source appendix is later justified: why was it placed outside the c
 ## Suggestions requiring a separate decision
 
 Confirm SDG alignment, operational metric definitions and appropriate reference-case review resources. Choose only appendix material that supports retained chapters and the proposal. Do not add product features beyond the proposal. No chapter content is authorized by this coordinator setup task.
+
+Final integration status: see kashaf/FINALISATION_PLAN.md and the member HANDOFF.md entries dated 10 October 2026. Historical setup and workload estimates below remain planning context.

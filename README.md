@@ -2,7 +2,7 @@
 
 Start with your own folder: **[kashaf/START_HERE.md](kashaf/START_HERE.md)**, **[fatima/START_HERE.md](fatima/START_HERE.md)** or **[esha/START_HERE.md](esha/START_HERE.md)**. Each contains your files, first tasks, dependencies and an agent prompt.
 
-Current submission: **Deliverable II, R&D, Chapters 1 through 6**, with compulsory Abstract, Executive Summary and References, plus the user-selected Appendix. Chapters 7 through 10 are archived outside the repository and are not assembled for this submission. Planning and template setup are complete. Chapter writing has not started; existing chapter text is template guidance/examples. The prototype is unbuilt.
+Current submission: **Deliverable II, R&D, Chapters 1 through 6**, with compulsory Abstract, Executive Summary and References, plus the user-selected Appendix. Chapters 7 through 10 are archived outside the repository and are not assembled for this submission. The six chapters and compulsory front matter have been integrated. The prototype is unbuilt; interface images are design mockups and no empirical results are claimed.
 
 ## Folder map
 
@@ -41,11 +41,11 @@ Use de-identified or synthetic data and supported domains with both suitable dat
 
 ## Shared writing rules
 
-Read `AGENTS.md`, `PLAN.md`, `Rules.txt`, the proposal and template before writing. Keep required chapter/section order and titles. Never edit `FastFyp.cls` or add packages. `main.tex` now assembles only Chapters 1 through 6, References and Appendix under the explicitly approved scope update. It is frozen again. Metadata placeholders remain unchanged.
+Read `AGENTS.md`, `PLAN.md`, `Rules.txt`, the proposal and template before writing. Keep required chapter/section order and titles. Never edit `FastFyp.cls` or add packages. `main.tex` now assembles only Chapters 1 through 6, References and Appendix under the explicitly approved scope update. It is frozen again. Title-page metadata and declaration names are populated. BS(CS) and 10 October 2026 are integration assumptions requiring team confirmation; signature spaces remain blank.
 
-Ordinary paragraphs: 150?250 words. Abstract: one paragraph, 50?125 words, three to five sentences. Executive Summary: one to two pages of plain prose. Refer to every figure; use descriptive captions, automatic numbering and citations. Literature review needs at least 15 distinct verified relevant works.
+Ordinary substantive prose: one 150-word paragraph per heading under the latest instruction. Brief table introductions, captions, table cells and feature bullets are exempt. Abstract: one paragraph, 50?125 words, three to five sentences. Executive Summary: one plain 150-word paragraph under the latest concise-writing instruction. Refer to every figure; use descriptive captions, automatic numbering and citations. Literature review needs at least 15 distinct verified relevant works.
 
-Mark all prospective implementation, tests and results `\textcolor{red}{PLANNED: ...}`. Use TBD / NOT MEASURED and NOT EXECUTED for absent evidence. Never invent references, results, resources or data access. Original example bibliography entries currently live in Kashaf's references; replace them only when corresponding example content is replaced and no other chapter still cites them. Use citation prefixes `zeestA:`, `zeestB:`, `zeestC:` and one canonical owner for shared sources.
+Use normal design and requirement wording for prospective implementation and evaluation. The user approved removal of red PLANNED markers; preserve their status information without claiming completed work. Never invent references, results, resources or data access. Original bibliography examples are preserved in Report template/fypbib.bib but are not assembled into the project bibliography. Use citation prefixes `zeestA:`, `zeestB:`, `zeestC:` and one canonical owner for shared sources.
 
 ## Working together
 
@@ -80,10 +80,18 @@ Generated PDFs and auxiliary files are ignored by Git. Required figure assets re
 
 The old `.phase2`, `baseline` and verification machinery is no longer in this repository. Original template sources/PDF, setup audit and local tools are preserved on the coordinator's machine at `D:\Codes_shit\Fyp Report setup archive 2026-10-04`. Team members do not need this archive to write or use a standard TeX toolchain. Its old scripts record the former layout and are historical rather than the current build interface.
 
-All three can begin assigned writing. Chapter content, verified literature, diagrams, unresolved proposal choices and final typography checks remain unfinished. No commits or pushes are performed by restructuring.
+Approved report integration is complete. Resource selection, implementation and executed evaluation remain future work. No commit or push was performed during finalisation.
 
 ## Deliverable II dependencies
 
-Kashaf supplies proposal scope, objective/requirement IDs, use-case meanings and the proposed data dictionary. Fatima verifies literature and defines methodology and planned evaluation contracts. Esha aligns the architecture and detailed design with both. Esha owns one chapter with six planned design diagrams, Fatima carries literature verification, and Kashaf carries the requirements tables and proposed interface views. Write Abstract and Executive Summary after the six chapters agree. Appendix is included, but its template examples await an approved content outline; they are not submission-ready Zeest material.
+Kashaf supplies proposal scope, objective/requirement IDs, use-case meanings and the proposed data dictionary. Fatima verifies literature and defines methodology and planned evaluation contracts. Esha aligns the architecture and detailed design with both. Esha owns one chapter with six planned design diagrams, Fatima carries literature verification, and Kashaf carries the requirements tables and proposed interface views. Write Abstract and Executive Summary after the six chapters agree. Appendix A contains objective traceability and configuration decisions; unrelated template demonstrations have been replaced.
 
 Kashaf requests explicit approval at every step and reviews two chapters together. For Kashaf, outline in chat, get approval, draft in chat, then obtain explicit approval before saving. Use Zeest with a capital Z and no em dashes in Kashaf's authored text. These personal style preferences do not grant permission to rewrite other members' work.
+
+## Final integration, 10 October 2026
+
+The user authorised this task-specific exception to member ownership and frozen assembly restrictions. Member ownership and main.tex freezing resume after this integration. FastFyp.cls was not edited and no packages were added. The required chapter order and front-matter items are retained; instructional database-heading text and demonstration literature/appendix headings have been replaced with project headings under the approved plan.
+
+Compile from Report template/. The reviewed local PDF is `Report template/build/Zeest-An-Agentic-Medical-Copilot-FYP-I.pdf`; generated build output stays ignored. Upload the full repository structure to Overleaf, with Report template/main.tex selected as the main document.
+
+The build uses the original class's Times fonts and spacing. Local main.tex font-encoding commands restore Times under XeTeX, and header height is compensated to keep the text-body position unchanged. Declaration spacing was reduced so both declarations fit together. Automatic contents, figure/table lists and IEEE references are regenerated. Both physician navigation diagrams are retained.

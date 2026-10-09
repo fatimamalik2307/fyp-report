@@ -2,6 +2,7 @@
 title Proposed Zeest methodology pipeline
 skinparam backgroundColor #FFFFFF
 skinparam shadowing false
+skinparam dpi 300
 skinparam defaultFontName Arial
 skinparam activity {
   BorderColor #2F3A4A
@@ -16,17 +17,16 @@ start
 :Transcribe audio into structured notes;
 :Physician reviews and corrects notes;
 
+:Patient Memory Agent retrieves source-aware history;
+:Clinical Case Agent prepares current inputs and historical context;
 fork
-  :Patient Memory Agent retrieves relevant longitudinal history;
-fork again
   :Imaging Agent analyses supported image with existing validated model;
 fork again
-  :Laboratory Agent prepares laboratory findings;
+  :Laboratory Agent processes supplied laboratory information;
 fork again
   :Medication Safety Agent reviews medication context;
 end fork
-
-:Clinical Case Agent combines current inputs, history and specialist findings;
+:Combine specialist findings and explicit processing status;
 :Evidence and RAG Agent retrieves cited clinical evidence;
 :Clinical Reasoning Agent drafts diagnosis and treatment plan;
 :Safety and Critic Agent reviews support and consistency;

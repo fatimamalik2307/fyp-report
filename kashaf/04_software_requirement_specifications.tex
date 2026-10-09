@@ -4,7 +4,8 @@
 \renewcommand{\encodingdefault}{T1}
 \fontencoding{T1}\selectfont
 \chapter{Software Requirement Specifications}
-The physician's workflow in Zeest begins with registration or login and selection of their own patient, then follows the case through consultation capture, clinical input processing and recommendation review. Patient and encounter context must remain visible throughout these tasks so that notes, images, laboratory information and medication findings can be interpreted together. The system retrieves relevant history, prepares the clinical case and presents a diagnosis and treatment draft with supporting evidence and critic findings. The physician decides whether to approve, modify or reject that draft, while the recorded decision and audit actions remain linked to the correct encounter. These interactions determine the required system behaviour, its required qualities and the retained information.
+
+The physician's clinical workflow in Zeest begins with registration or login and selection of their own patient, then follows the selected case through consultation capture, clinical input processing and recommendation physician review. Patient and encounter context must remain visible throughout these tasks so that notes, images, laboratory information and medication specialist findings can be interpreted together. The system retrieves history, prepares the clinical case and presents a diagnosis and treatment draft with supporting evidence and critic findings. The physician decides whether to approve, modify or reject that draft, while the recorded decision and audit actions remain linked to the correct encounter. These interactions determine the required system behaviour, its required qualities and the retained information. Saved input and draft revisions make the exact information used for analysis and approval identifiable. Ownership checks restrict each clinical operation to the responsible physician, and explicit processing states distinguish incomplete case inputs from findings.
 
 \section{List of Features}
 \begin{itemize}
@@ -26,6 +27,7 @@ The physician's workflow in Zeest begins with registration or login and selectio
 \end{itemize}
 
 \section{Functional Requirements}
+
 Tables~\ref{tab:kashaf:fr-access} through~\ref{tab:kashaf:fr-review} specify clinical functions; Table~\ref{tab:kashaf:research-requirements} specifies comparative evaluation.
 
 \begin{table}[htbp]
@@ -145,30 +147,37 @@ RR04 & The evaluation framework shall support controlled comparisons of critic r
 % Finish this section's floats before the next heading.
 \clearpage
 \section{Quality Attributes}
-The numbered attributes describe the expected quality of the clinical workflow.
 
 \subsection{Usability}
-The physician interface must make patient review, consultation capture and clinical decisions easy to follow. Patient and encounter context should remain visible so that the physician can identify which case is being reviewed. Navigation must use consistent labels for patient history, consultation and review actions. Structured notes need a readable presentation and a clear means of correcting transcription errors before further processing. Specialist findings and retrieved evidence should be distinguishable from the generated diagnosis and treatment draft. The physician must also understand whether a draft is pending, modified, rejected or approved. Approval, modification and rejection controls require clear labels because they produce different outcomes. Messages should explain unusable inputs and failed operations without suggesting that analysis succeeded.
+
+The physician interface must make patient review, consultation capture and clinical decisions easy to follow. Patient and encounter context should remain visible so that the physician can identify which case is being reviewed. Navigation must use consistent labels for patient history, consultation and review actions. Structured notes need a readable presentation and a clear means of correcting transcription errors before processing. Specialist findings and retrieved evidence should be distinguishable from the generated diagnosis and treatment draft. The physician must understand whether a draft is pending, modified, rejected or approved. Approval, modification and rejection controls require clear labels because they produce different outcomes. Messages should explain unusable inputs and failed operations without suggesting that analysis succeeded. The interface should make the next available action understandable without showing internal framework labels or requirement codes as application content. Empty states should indicate what information is unavailable and which user action can supply it.
 
 \subsection{Reliability and Integrity}
-Zeest must preserve the association between each patient, encounter, clinical input and recorded review action. Information retrieved from earlier encounters must retain its source and must not become associated with a different patient during case preparation. Processing components need to return identifiable results or failures so that incomplete analysis cannot be mistaken for completed findings. A generated draft must remain separate from an approved clinical decision, including when the physician edits or rejects it. Approval must refer to the saved revision that the physician reviewed, and the recorded content must match that revision. Audit entries need to preserve the corresponding actor, action and context. These relationships make the outcome of each operation understandable and protect the continuity of the case.
+
+Zeest must preserve the association between each patient, encounter, input and recorded review action. Information retrieved from earlier encounters must retain its source and must not become associated with a different patient during case preparation. Processing components need to return identifiable results or failures so that incomplete analysis cannot be mistaken for completed findings. A generated draft must remain separate from an approved clinical decision, including when the physician edits or rejects it. Approval must refer to the saved revision that the physician reviewed, and the recorded content must match that revision. Audit entries need to preserve the actor, action and context. These relationships make the outcome of each operation understandable and protect the continuity of the case. Failed requests must leave an understandable state without creating a partial accepted decision. Repeated approval attempts must not create duplicate decisions. Saved outcomes must remain distinguishable from pending operations and rejected requests.
 
 \subsection{Security and Confidentiality}
-Clinical operations require an authenticated physician session, and each physician can access only their own patient records. Ownership checks apply to patient details, encounters, clinical inputs, drafts, approved decisions and audit history. A request for another physician's record must not reveal its information or permit processing. Registration validates account information, login establishes access and logout ends the session. Stored passwords require salted hashing rather than plaintext storage.\cite{zeestA:owaspPasswords} Development and evaluation use de-identified or synthetic cases. Account restrictions and data-handling practices address different aspects of confidentiality, and both apply across consultation documentation, specialised analysis and physician review rather than only on the login screen.
+
+Clinical operations require a valid authenticated physician session, and each physician can access only their own patient records. Ownership checks apply to patient details, encounters, clinical inputs, drafts, approved decisions and audit history. A request for another physician's record must not reveal its information or permit processing. Registration validates account information, login establishes access and logout ends the session. All stored passwords require salted hashing rather than plaintext storage.~\cite{zeestA:owaspPasswords} Development and evaluation use de-identified or synthetic cases. Account restrictions and data-handling practices address different aspects of confidentiality, and both apply across consultation documentation, specialised analysis and physician review rather than only on the login screen. Ownership must be enforced by application services as well as by the visible patient list. Changing a patient or encounter identifier in a request must not bypass these restrictions. Error responses should avoid exposing another physician's record, and clinical data permissions must be checked separately.
 
 \subsection{Performance}
-The consultation workflow requires timely transcription, history retrieval and clinical processing so that the physician can follow the progress of the encounter. Audio transcription should operate incrementally instead of waiting for the entire consultation to finish. Other processing stages must expose their state so that a pending operation is distinguishable from a completed result or a failure. Performance depends on the selected language model, imaging model, knowledge resources and execution environment. It must therefore be assessed through defined measurements, including transcription delay and the time required for retrieval and analysis. The application must avoid presenting incomplete output as a final result merely to appear responsive. Numerical acceptance limits require an agreed environment and workload before evaluation.
+
+The consultation workflow requires timely transcription, history retrieval and clinical processing so that the physician can follow the progress of the encounter. Audio transcription should proceed incrementally without waiting until the whole consultation has finished. Other processing stages must expose their state so that a pending operation is distinguishable from a completed result or a failure. Performance depends on the selected language model, imaging model, knowledge resources and execution environment. It must be assessed through measurements, including transcription delay and the time required for retrieval and analysis. The application must avoid presenting incomplete output as a final result merely to appear responsive. Numerical acceptance limits require an agreed environment and workload before evaluation. Measurements must record the workload, service configuration and stage boundaries so comparisons remain interpretable. Pending tasks should not prevent the physician from understanding the encounter state. Performance checks must therefore identify each stage and its completion state.
 
 \subsection{Maintainability and Reusability}
-The components of Zeest need defined responsibilities and consistent interfaces so that the integration can be understood and maintained. Transcription, memory retrieval, specialised analysis, evidence retrieval and clinical reasoning should exchange identifiable inputs, outputs and failure information. A problem in one stage must be distinguishable from a failure elsewhere in the workflow. Existing diagnostic models and knowledge resources form the supporting groundwork, while the integration connects their results to patient context and physician review. Maintaining that connection requires changes to preserve the patient and encounter associations used by downstream components. Reusability concerns retaining these interfaces when a compatible supporting component is replaced. It does not require every model or knowledge resource to be interchangeable without adaptation.
+
+The components of Zeest need responsibilities and consistent interfaces so that the integration can be understood and maintained. Transcription, memory retrieval, specialised analysis, evidence retrieval and reasoning should exchange identifiable inputs, outputs and failure information. A problem in one stage must be distinguishable from a failure elsewhere in the workflow. Existing diagnostic models and knowledge resources form the supporting groundwork, while the integration connects their results to patient context and physician review. Maintaining that connection requires changes to preserve the patient and encounter associations used by downstream components. Reusability concerns retaining these interfaces when a compatible supporting component is replaced. It does not require every model or knowledge resource to be interchangeable without adaptation. Versioned contracts and source identifiers help isolate the effect of an integration change. Each component should expose its resource restrictions and errors through the same application boundary. Documented contracts provide the basis for targeted integration checks.
 
 \subsection{Extensibility}
-Zeest must accommodate compatible clinical data and existing diagnostic models within its established workflow. Extending clinical coverage depends on suitable case information and a validated model for the intended task, rather than on the language model's ability to discuss a condition. A new input or model must supply findings that can be associated with the correct patient, encounter and source. The Clinical Case Agent must be able to organise those findings alongside the supported historical context. Evidence retrieval, clinical reasoning and critic review must continue to operate on identifiable information, and physician approval must remain necessary before a decision is recorded. Extensibility therefore concerns adding compatible capabilities while preserving the relationships and controls already required by the system.
+
+Zeest must accommodate compatible clinical data and diagnostic models within its established workflow. Extending clinical coverage depends on suitable case information and a validated model for the task, rather than on the language model's ability to discuss a condition. A new input or model must supply findings that can be associated with the correct patient, encounter and source. The Clinical Case Agent must be able to organise those findings alongside the historical context. Evidence retrieval, clinical reasoning and critic review must continue to operate on identifiable information, and physician approval must remain necessary before a decision is recorded. Extensibility concerns adding compatible capabilities while preserving the relationships and controls already required by the system. New coverage must preserve evidence visibility and explicit failure states. Supporting a broader topic in generated text alone does not establish validated clinical analysis. Compatibility requires documented inputs, outputs and preserved decision boundaries for every extension.
 
 \subsection{Traceability}
-The physician must be able to relate a displayed finding or recommendation to the information used in producing it. Clinical inputs need identifiable patient, encounter and source associations, while retrieved guidelines require citations and supporting passages. Specialist findings must remain linked to their input sources so that the physician can distinguish an imaging result from a laboratory or medication finding. The generated diagnosis and treatment draft must retain its supporting evidence and critic findings during review. Physician actions also require identifiable context, including the reviewed revision and the content accepted through approval. An audit entry records what action occurred; it does not itself establish that a draft became an approved decision.
+
+The physician must be able to relate a displayed finding or recommendation to the information used in producing it. Clinical inputs need identifiable patient, encounter and source associations, while retrieved guidelines require citations and supporting passages. Specialist findings must remain linked to their input sources so that the physician can distinguish an imaging result from a laboratory or medication finding. The generated diagnosis and treatment draft must retain its supporting evidence and critic findings during review. Physician actions require identifiable context, including the reviewed revision and the content accepted through approval. An audit entry records what action occurred; it does not itself establish that a draft became an approved decision. Source relationships must remain available after note corrections or draft modifications. Findings and citations refer to the revision used, while the approval action identifies the content accepted. Source identifiers must survive retrieval, presentation and later inspection of the reviewed case.
 
 \section{Non-Functional Requirements}
+
 Tables~\ref{tab:kashaf:nfr} and~\ref{tab:kashaf:nfr-integrity} define the constraints supporting these attributes.
 
 \begin{table}[htbp]
@@ -209,11 +218,10 @@ NFR16 & Reuse & Replacing a specialist integration shall preserve its agreed int
 \end{tabular}
 \end{table}
 
-\textcolor{red}{PLANNED: Timing limits, concurrent-user capacity and resource thresholds will be set for the agreed environment; performance measurements and acceptance tests have not been executed.}
-
 % Finish this section's floats before the next heading.
 \clearpage
 \section{Assumptions}
+
 Table~\ref{tab:kashaf:assumptions} records the operating assumptions.
 
 \begin{table}[htbp]
@@ -237,6 +245,7 @@ A07 & Permitted de-identified or synthetic cases support the selected domain. & 
 % Finish this section's floats before the next heading.
 \clearpage
 \section{Use Cases}
+
 Figure~\ref{fig:kashaf:usecases} shows actor participation and included or conditional behaviour. Tables~\ref{tab:kashaf:uc01} through~\ref{tab:kashaf:uc22} describe the complete identified workflow.
 
 \begin{figure}[htbp]
@@ -737,10 +746,12 @@ Figure~\ref{fig:kashaf:usecases} shows actor participation and included or condi
 
 \clearpage
 \section{Hardware and Software Requirements}
+
 Tables~\ref{tab:kashaf:hardware} and~\ref{tab:kashaf:software} identify the supporting resources.
 
 \subsection{Hardware Requirements}
-A development computer must support the application services, storage and the tools used to integrate the processing components. The physician interface needs a browser-capable device and an audio input source for consultation capture. Microphone access must be available when the recording workflow is used, and connectivity must support whichever processing services are selected. Storage must retain the permitted case inputs, relational records and associated semantic representations without separating them from their identifying context. Compute and memory requirements depend on the imaging and transcription models, the language-model access arrangement and the size of the case collection. Table~\ref{tab:kashaf:hardware} records these resource needs with the configuration values that remain to be established.
+
+A development computer must support the application services, storage and the tools used to integrate the processing components. The physician interface needs a browser-capable device and an audio input source for consultation capture. Microphone access must be available when the recording workflow is used, and connectivity must support whichever processing services are selected. Storage must retain the permitted case inputs, relational records and associated semantic representations without separating them from their identifying context. Compute and memory requirements depend on the imaging and transcription models, the language-model access arrangement and the size of the case collection. Table~\ref{tab:kashaf:hardware} records these resource needs with the configuration values that remain to be established. Numerical compute, storage and concurrent-user limits must be established for the selected workload rather than assumed from a candidate model. Resource failures should be identifiable during integration checks. No resource specification alone establishes measured capacity for the integrated clinical processing workflow.
 
 \begin{table}[htbp]
 \centering
@@ -762,7 +773,8 @@ Connectivity & Access to selected processing and evidence services & Connection 
 % Finish this section's floats before the next heading.
 \clearpage
 \subsection{Software Requirements}
-FastAPI provides the backend integration layer, while Next.js supports the physician-facing web interface. LangGraph and Google ADK are the named orchestration technologies for coordinating the agent responsibilities, with their exact division to be agreed in the detailed design. Gemini supplies the language-model capability used within the reasoning workflow, and PyTorch supports integration of the selected existing imaging model. PostgreSQL stores patient, encounter and review information, with pgvector providing the semantic representation layer alongside relational records. A transcription component and clinical knowledge resources complete the dependencies needed for consultation capture, guideline retrieval and medication review. Table~\ref{tab:kashaf:software} connects these technologies to their intended responsibilities. Component versions, model identifiers, supported representations and access conditions must be recorded when the environment is selected.
+
+FastAPI provides the backend integration layer, while Next.js supports the physician-facing web interface. LangGraph and Google ADK are the named orchestration technologies for coordinating the agent responsibilities, with their exact division to be agreed in the detailed design. Gemini supplies the language-model capability used within the reasoning workflow, and PyTorch supports integration of the imaging model. PostgreSQL stores patient, encounter and review information, with pgvector providing the semantic representation layer alongside relational records. A transcription component and clinical knowledge resources the dependencies needed for consultation capture, guideline retrieval and medication review. Table~\ref{tab:kashaf:software} connects these technologies to their responsibilities. Component versions, model identifiers, representations and access conditions must be recorded when the environment is selected. Component versions and permitted resource use must be recorded before comparative runs. Framework choices do not establish completed integration or guaranteed compatibility. Each selected dependency requires a recorded configuration and an identifiable integration failure path.
 
 \begin{table}[htbp]
 \centering
@@ -787,9 +799,8 @@ MIMIC-IV; MIMIC-CXR; PubMed; Synthea; imaging candidates & Clinical/evidence dat
 % Finish this section's floats before the next heading.
 \clearpage
 \section{Graphical User Interface}
-The physician screens support registration, access to the physician's own patients, encounter review, consultation capture and clinical decisions. Related functions share pages or tabs rather than requiring a separate page for every use case. The research team uses a separate comparative-evaluation screen. Tables~\ref{tab:kashaf:view-map} and~\ref{tab:kashaf:view-review-map} identify each screen, user and covered use case. Figures~\ref{fig:kashaf:navigation}, \ref{fig:kashaf:swimlane-navigation} and~\ref{fig:kashaf:research-navigation} show their navigation. Existing accounts begin at Login; registration is available for new accounts. Review branches to modification, approval or rejection, while accepted decisions and audit actions remain distinguishable. Patient and encounter context is maintained throughout clinical work. Screen captions identify the intended user and covered functionality.
 
-\textcolor{red}{PLANNED: These figures are proposed GUI designs, not screenshots of an implemented clinical system. Sample references and empty content areas illustrate layout; authentication, recording, analysis and decisions are not executed.}
+The physician screens support registration, access to the physician's own patients, encounter review, consultation capture and clinical decisions. Related functions share pages or tabs rather than requiring a separate page for every use case. The research team uses a separate comparative-evaluation screen. Tables~\ref{tab:kashaf:view-map} and~\ref{tab:kashaf:view-review-map} identify each screen, user and covered use case. Figures~\ref{fig:kashaf:navigation}, \ref{fig:kashaf:swimlane-navigation} and~\ref{fig:kashaf:research-navigation} show their navigation. Existing accounts begin at Login; registration is available for new accounts. Review branches to modification, approval or rejection, while accepted decisions and audit actions remain distinguishable. Patient and encounter context is maintained throughout clinical work. Screen captions identify the intended user and covered functionality. These images are interface mockups rather than evidence of executed authentication, recording, analysis or decisions. Empty states and illustrative references show layout only. The primary screen flow and the physician-system swimlane provide complementary views, while the research flow separates evaluation work from clinical review. Implementation testing remains future work.
 
 \begin{table}[htbp]
 \centering
@@ -837,14 +848,13 @@ G16 & Comparative Evaluation (Figure~\ref{fig:kashaf:gui-evaluation}) & Research
 \label{fig:kashaf:navigation}
 \end{figure}
 
-\clearpage
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=0.86\textheight,keepaspectratio]{Figures/kashaf_D02_doctor_navigation.png}
 \caption{Physician--Zeest swimlane navigation retained alongside the screen-thumbnail flow. Physician actions appear in the left lane and system processing in the right, including ownership checks, clinical analysis, draft modification, explicit approval or rejection, audit review and logout.}
 \label{fig:kashaf:swimlane-navigation}
 \end{figure}
-\clearpage
+
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.22\textheight,keepaspectratio]{Figures/kashaf_research_navigation.png}
@@ -852,188 +862,180 @@ G16 & Comparative Evaluation (Figure~\ref{fig:kashaf:gui-evaluation}) & Research
 \label{fig:kashaf:research-navigation}
 \end{figure}
 
-\clearpage
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G01_signup.png}
-\caption{G01 Sign Up, Physician, UC01: a white name, email and password form appears over a decorative medical illustration, with account creation and Login controls.}
+\caption{Physician registration form with name, email and password fields (UC01).}
 \label{fig:kashaf:gui-signup}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G02_login.png}
-\caption{G02 Log In, Physician, UC02, UC21: the email and password form shares the medical background and provides Login and account-registration navigation; logout returns to this page.}
+\caption{Physician login form and account-access controls (UC02, UC21).}
 \label{fig:kashaf:gui-login}
 \end{figure}
 
-\clearpage
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G03_patients.png}
-\caption{G03 My Patients, Physician, UC03, UC21: a patient table provides access to the logged-in physician's own records and includes the Logout control.}
+\caption{Physician patient list and selection controls (UC03, UC21).}
 \label{fig:kashaf:gui-patients}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G04_history.png}
-\caption{G04 Patient Details, Physician, UC04--UC06: the selected patient and encounter references appear above an encounter-history list and notes, imaging, laboratory and medication panels; Open Encounter leads to consultation.}
+\caption{Patient context, history and encounter selection (Physician, UC04--UC06).}
 \label{fig:kashaf:gui-history}
 \end{figure}
 
-\clearpage
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G05_consultation.png}
-\caption{G05 Consultation, Physician, UC07--UC08: recording controls appear beside editable structured notes and a Save Notes control, followed by navigation to clinical inputs.}
+\caption{Consultation recording controls and editable notes (Physician, UC07--UC08).}
 \label{fig:kashaf:gui-consultation}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G06_imaging.png}
-\caption{G06 Imaging Input and Findings, Physician, UC09, UC12--UC13: the Imaging tab provides file selection, submission and a source-related findings area.}
+\caption{Imaging upload and findings area (Physician, UC09, UC12).}
 \label{fig:kashaf:gui-imaging}
 \end{figure}
 
-\clearpage
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G07_laboratory.png}
-\caption{G07 Laboratory Input and Findings, Physician, UC10, UC12--UC13: the Laboratory tab provides an information-entry area, analysis submission and a findings area.}
+\caption{Laboratory input and findings area (Physician, UC10, UC12).}
 \label{fig:kashaf:gui-laboratory}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G08_medication.png}
-\caption{G08 Medication Input and Findings, Physician, UC11, UC12--UC13: the Medication tab provides medication-context entry, analysis submission and a findings area.}
+\caption{Medication input and findings area (Physician, UC11, UC12).}
 \label{fig:kashaf:gui-medication}
 \end{figure}
 
-\clearpage
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G09_review.png}
-\caption{G09 Clinical Review and Evidence, Physician, UC13--UC14: the pending diagnosis and treatment draft appears beside supporting evidence, with Modify, Reject and Approve controls.}
+\caption{Clinical draft and supporting evidence tabs (Physician, UC13--UC14).}
 \label{fig:kashaf:gui-review}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G10_critic.png}
-\caption{G10 Critic Findings, Physician, UC15: the Critic Findings tab appears beside the clinical draft for physician inspection.}
+\caption{Critic findings beside the clinical draft (Physician, UC15).}
 \label{fig:kashaf:gui-critic}
 \end{figure}
 
-\clearpage
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G11_modify.png}
-\caption{G11 Modify Clinical Draft, Physician, UC16: editable diagnosis and treatment areas provide Cancel and Save Changes controls; saving does not approve the draft.}
+\caption{Draft revision editor and save controls (Physician, UC16).}
 \label{fig:kashaf:gui-modify}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G12_approve.png}
-\caption{G12 Approval Confirmation, Physician, UC17: the confirmation dialog identifies patient and encounter context and reserves an area for the exact reviewed content and revision.}
+\caption{Confirmation dialog for explicit draft approval (Physician, UC17).}
 \label{fig:kashaf:gui-approve}
 \end{figure}
 
-\clearpage
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G13_reject.png}
-\caption{G13 Rejection Confirmation, Physician, UC18: the confirmation dialog distinguishes rejection from recording an approved decision.}
+\caption{Confirmation dialog for draft rejection (Physician, UC18).}
 \label{fig:kashaf:gui-reject}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G14_decisions.png}
-\caption{G14 Approved Decisions, Physician, UC19: the Approved Decisions tab reserves a read-only area for accepted content and links to audit history.}
+\caption{Selected encounter approved-decision view (Physician, UC19).}
 \label{fig:kashaf:gui-decisions}
 \end{figure}
 
-\clearpage
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G15_audit.png}
-\caption{G15 Audit History, Physician, UC20: the Audit History tab displays time, physician, action, revision and outcome columns.}
+\caption{Encounter review-action history table (Physician, UC20).}
 \label{fig:kashaf:gui-audit}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=.60\textheight,keepaspectratio]{Figures/kashaf_G16_evaluation.png}
-\caption{G16 Comparative Evaluation, Research team, UC22: case selection, variant and contribution settings appear beside run status and an output area.}
+\caption{Case, variant and run controls for comparative evaluation (Research team, UC22).}
 \label{fig:kashaf:gui-evaluation}
 \end{figure}
 
 \clearpage
-\clearpage
-\section{Database Design (if required; this means if you are using noSQL, you will not provide ER but the other design element and data dictonary should still be there. Explain and elaborate your DB design)}
-The logical design separates physician accounts, patient ownership, clinical information, generated drafts and accepted decisions. Each patient has one responsible physician, and encounters inherit that ownership through the patient. Clinical inputs retain saved revisions, allowing findings and draft preparation to identify their exact source content. Draft revisions keep diagnosis and treatment text distinct from approval actions and accepted decisions. Retrieved evidence and critic reviews refer to the assessed revision. Semantic representations originate from an input revision or an approved decision. Separate evaluation records connect permitted cases, run settings and recorded outputs. These relationships preserve continuity, source traceability and physician authority across the defined workflow.
+\section{Database Design}
 
-\textcolor{red}{PLANNED: The schema specifies intended storage and validation relationships. Physical implementation, model-dependent vector dimensions and executed evaluation outputs are not claimed.}
+The logical design separates physician accounts, patient ownership, clinical information, generated drafts and accepted decisions. Each patient has one responsible physician, and encounters inherit that ownership through the patient. Clinical case inputs retain saved revisions, allowing findings and draft preparation to identify their exact source content. Draft revisions keep diagnosis and treatment text distinct from approval actions and accepted decisions. Retrieved evidence and critic reviews refer to the assessed revision. Semantic representations originate from an input revision or an approved decision. Separate evaluation records connect permitted cases, run settings and recorded outputs. These relationships preserve continuity, source traceability and physician authority across the defined clinical workflow. The schema is a logical design rather than an implemented database. Patient ownership and revision consistency require explicit validation alongside foreign keys. Model-dependent vector dimensions remain configuration choices, and evaluation outputs represent records to be populated after actual runs rather than supplied numerical findings.
 
 \subsection{ER Diagram}
-Figure~\ref{fig:kashaf:er} presents the complete conceptual model with entities, relationship diamonds and attribute ovals together. Dashed regions group accounts and clinical information, drafts and supporting evidence, physician review and memory, and comparative evaluation. Blue rectangles identify entities, green ovals identify attributes, and amber diamonds identify named relationships. Primary keys are underlined and foreign keys are marked FK. Cardinalities express ownership and record associations, while revision keys preserve the exact content used or reviewed. Figures~\ref{fig:kashaf:er-clinical}, \ref{fig:kashaf:er-drafts}, \ref{fig:kashaf:er-review} and~\ref{fig:kashaf:er-evaluation} enlarge the same regions; cross-region relationships remain visible in the complete model.
+
+Figure~\ref{fig:kashaf:er} presents the complete conceptual model with entities, relationship diamonds and attribute ovals together. Dashed regions group accounts and clinical information, drafts and supporting evidence, physician review and memory, and comparative evaluation. Blue rectangles identify entities, green ovals identify attributes, and amber diamonds identify named relationships. Primary keys are underlined and foreign keys are marked FK. Cardinalities express ownership and record associations, while revision keys preserve the exact content used or reviewed. Figures~\ref{fig:kashaf:er-clinical}, \ref{fig:kashaf:er-drafts}, \ref{fig:kashaf:er-review} and~\ref{fig:kashaf:er-evaluation} enlarge the same regions; cross-region relationships remain visible in the complete model. The grouped enlargements retain the same entity and relationship names as the overview, allowing attributes and cardinalities to be read at print size. Login and registration are account operations rather than separate persistent clinical entities. Evaluation links remain separate from clinical decisions, so a comparative output cannot become an approved patient record merely because it was saved. Region enlargements preserve the same underlying schema.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.98\textwidth,height=0.80\textheight,keepaspectratio]{Figures/kashaf_D03_conceptual_combined.pdf}
-\caption{Complete grouped conceptual ER model for Zeest. Entities connect to their attribute ovals and named relationship diamonds; dashed regions organise the model by responsibility. Underlined fields denote primary keys, FK denotes foreign keys, and relationship ends show cardinalities.}
+\caption{Complete grouped conceptual ER model with entity, attribute and relationship symbols.}
 \label{fig:kashaf:er}
 \end{figure}
 \clearpage
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.98\textwidth,height=0.80\textheight,keepaspectratio]{Figures/kashaf_D03_combined_clinical.pdf}
-\caption{Enlarged accounts and clinical information region of the conceptual ER model, with entity rectangles, attached attribute ovals and internal relationship diamonds. Cross-region links appear in the complete model; fields match the data dictionary.}
+\caption{Accounts and clinical sources with attributes and relationship cardinalities.}
 \label{fig:kashaf:er-clinical}
 \end{figure}
 \clearpage
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.98\textwidth,height=0.80\textheight,keepaspectratio]{Figures/kashaf_D03_combined_drafts.pdf}
-\caption{Enlarged drafts and supporting evidence region of the conceptual ER model, with entity rectangles, attached attribute ovals and internal relationship diamonds. Cross-region links appear in the complete model; fields match the data dictionary.}
+\caption{Draft revisions, evidence and critic review with attributes and relationships.}
 \label{fig:kashaf:er-drafts}
 \end{figure}
 \clearpage
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.98\textwidth,height=0.80\textheight,keepaspectratio]{Figures/kashaf_D03_combined_review.pdf}
-\caption{Enlarged physician review and memory region of the conceptual ER model, with entity rectangles, attached attribute ovals and internal relationship diamonds. Cross-region links appear in the complete model; fields match the data dictionary.}
+\caption{Physician actions, accepted decisions and semantic memory relationships.}
 \label{fig:kashaf:er-review}
 \end{figure}
 \clearpage
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.98\textwidth,height=0.80\textheight,keepaspectratio]{Figures/kashaf_D03_combined_evaluation.pdf}
-\caption{Enlarged comparative evaluation region of the conceptual ER model, with entity rectangles, attached attribute ovals and internal relationship diamonds. Cross-region links appear in the complete model; fields match the data dictionary.}
+\caption{Evaluation cases, configurations and recorded output relationships.}
 \label{fig:kashaf:er-evaluation}
 \end{figure}
 \clearpage
 \subsection{Data Dictionary}
-Tables~\ref{tab:kashaf:dict-physician} through~\ref{tab:kashaf:dict-evaluationoutput} define the same eighteen entities and attributes shown in the combined diagrams. PK denotes a primary key, FK a foreign key, and paired fields refer to a composite key. Conditional nullability permits a value only according to its representation or processing state. Input and draft revision numbers distinguish saved versions, while evidence and review links identify the version they support or assess. Account email is unique and passwords are stored as salted hashes. Patient ownership governs access to clinical descendants. Evaluation fields describe intended records, with numerical measurements populated only after an actual run. Conditional source fields retain explicit integrity checks.
+
+Tables~\ref{tab:kashaf:dict-physician} onward define the entities, attributes, data types, constraints and meanings used by the logical schema. Primary keys identify records, composite keys preserve associations, and nullable fields accommodate absent values only where their processing state permits. Each patient's physician association governs access to encounters, case inputs, drafts, actions and decisions. Corrections create input revisions rather than replacing saved content; draft evidence, recorded critic findings and source links identify the exact revision they support. Approval validates the reviewed revision and physician action together, records matching accepted content, and permits at most one decision for that revision. Modified or rejected drafts remain outside accepted decisions. Semantic memory links authorised input revisions or approved decisions to their vector representations, with model-dependent dimensions configured after model selection. Evaluation fields describe case definitions, configurations and outputs; numerical measurements are populated only after an executed run. These relationships maintain source traceability without inventing missing clinical information.
 
 \begin{table}[htbp]
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{Physician attributes, logical types, nullability and constraints.}
+\caption{Physician attributes, types and constraints.}
 \label{tab:kashaf:dict-physician}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{physician\_id} & UUID & No & PK & Unique physician account. \\ \hline
-\texttt{full\_name} & text & No & Required & Name supplied at registration. \\ \hline
-\texttt{email} & text & No & Unique & Normalised registration and login email. \\ \hline
-\texttt{password\_hash} & text & No & Required & Salted hash; plaintext passwords are never stored. \\ \hline
-\texttt{created\_at} & timestamptz & No & Required & Account creation time. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{physician\_id} & UUID & PK; not null & Unique physician account. \\ \hline
+\texttt{full\_name} & text & Required; not null & Name supplied at registration. \\ \hline
+\texttt{email} & text & Unique; not null & Normalised registration and login email. \\ \hline
+\texttt{password\_hash} & text & Required; not null & Salted hash; plaintext passwords are never stored. \\ \hline
+\texttt{created\_at} & timestamptz & Required; not null & Account creation time. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1041,15 +1043,15 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{Patient attributes, logical types, nullability and constraints.}
+\caption{Patient attributes, types and constraints.}
 \label{tab:kashaf:dict-patient}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{patient\_id} & UUID & No & PK & Unique patient record. \\ \hline
-\texttt{physician\_id} & UUID & No & FK & Physician who owns the record. \\ \hline
-\texttt{patient\_ref} & text & No & Unique & De-identified or synthetic reference. \\ \hline
-\texttt{context\_text} & text & Yes & Optional & Available patient context. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{patient\_id} & UUID & PK; not null & Unique patient record. \\ \hline
+\texttt{physician\_id} & UUID & FK; not null & Physician who owns the record. \\ \hline
+\texttt{patient\_ref} & text & Unique; not null & De-identified or synthetic reference. \\ \hline
+\texttt{context\_text} & text & Optional; nullable & Available patient context. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1057,14 +1059,14 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{Encounter attributes, logical types, nullability and constraints.}
+\caption{Encounter attributes, types and constraints.}
 \label{tab:kashaf:dict-encounter}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{encounter\_id} & UUID & No & PK & Unique encounter. \\ \hline
-\texttt{patient\_id} & UUID & No & FK & Patient associated with this encounter. \\ \hline
-\texttt{recorded\_at} & timestamptz & No & Required & Encounter date and time. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{encounter\_id} & UUID & PK; not null & Unique encounter. \\ \hline
+\texttt{patient\_id} & UUID & FK; not null & Patient associated with this encounter. \\ \hline
+\texttt{recorded\_at} & timestamptz & Required; not null & Encounter date and time. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1072,14 +1074,14 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{ClinicalInput attributes, logical types, nullability and constraints.}
+\caption{ClinicalInput attributes, types and constraints.}
 \label{tab:kashaf:dict-clinicalinput}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{input\_id} & UUID & No & PK & Stable identifier of the supplied input. \\ \hline
-\texttt{encounter\_id} & UUID & No & FK & Encounter where the input originates. \\ \hline
-\texttt{input\_kind} & text & No & Check & Notes, imaging, laboratory or medication. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{input\_id} & UUID & PK; not null & Stable identifier of the supplied input. \\ \hline
+\texttt{encounter\_id} & UUID & FK; not null & Encounter where the input originates. \\ \hline
+\texttt{input\_kind} & text & Check; not null & Notes, imaging, laboratory or medication. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1087,16 +1089,16 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{InputRevision attributes, logical types, nullability and constraints.}
+\caption{InputRevision attributes, types and constraints.}
 \label{tab:kashaf:dict-inputrevision}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{input\_id} & UUID & No & PK/FK & Clinical input being versioned. \\ \hline
-\texttt{revision\_no} & integer & No & PK; >0 & Saved revision of this input. \\ \hline
-\texttt{content\_text} & text & Conditional & Check & Text content where applicable. \\ \hline
-\texttt{file\_ref} & text & Conditional & Check & Stored file reference where applicable. \\ \hline
-\texttt{recorded\_at} & timestamptz & No & Required & Revision recording time. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{input\_id} & UUID & PK/FK; not null & Clinical input being versioned. \\ \hline
+\texttt{revision\_no} & integer & PK; >0; not null & Saved revision of this input. \\ \hline
+\texttt{content\_text} & text & Check; not null & Text content where applicable. \\ \hline
+\texttt{file\_ref} & text & Check; not null & Stored file reference where applicable. \\ \hline
+\texttt{recorded\_at} & timestamptz & Required; not null & Revision recording time. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1104,19 +1106,19 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{SpecialistFinding attributes, logical types, nullability and constraints.}
+\caption{SpecialistFinding attributes, types and constraints.}
 \label{tab:kashaf:dict-specialistfinding}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{finding\_id} & UUID & No & PK & Unique analysis finding or processing record. \\ \hline
-\texttt{input\_id} & UUID & No & FK pair & Source clinical input. \\ \hline
-\texttt{input\_revision} & integer & No & FK pair & Exact analysed input revision. \\ \hline
-\texttt{agent\_kind} & text & No & Check & Imaging, laboratory or medication agent. \\ \hline
-\texttt{model\_ref} & text & Yes & Optional & Model/resource identifier where applicable. \\ \hline
-\texttt{finding\_text} & text & Conditional & Check & Available specialist findings. \\ \hline
-\texttt{processing\_status} & text & No & Check & Pending, complete or failed. \\ \hline
-\texttt{processed\_at} & timestamptz & Yes & Optional & Completion or failure time. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{finding\_id} & UUID & PK; not null & Unique analysis finding or processing record. \\ \hline
+\texttt{input\_id} & UUID & FK pair; not null & Source clinical input. \\ \hline
+\texttt{input\_revision} & integer & FK pair; not null & Exact analysed input revision. \\ \hline
+\texttt{agent\_kind} & text & Check; not null & Imaging, laboratory or medication agent. \\ \hline
+\texttt{model\_ref} & text & Optional; nullable & Model/resource identifier where applicable. \\ \hline
+\texttt{finding\_text} & text & Check; not null & Available specialist findings. \\ \hline
+\texttt{processing\_status} & text & Check; not null & Pending, complete or failed. \\ \hline
+\texttt{processed\_at} & timestamptz & Optional; nullable & Completion or failure time. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1124,14 +1126,14 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{Proposal attributes, logical types, nullability and constraints.}
+\caption{Proposal attributes, types and constraints.}
 \label{tab:kashaf:dict-proposal}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{proposal\_id} & UUID & No & PK & Stable identifier of a clinical draft. \\ \hline
-\texttt{encounter\_id} & UUID & No & FK & Encounter for which the draft is generated. \\ \hline
-\texttt{created\_at} & timestamptz & No & Required & Draft creation time. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{proposal\_id} & UUID & PK; not null & Stable identifier of a clinical draft. \\ \hline
+\texttt{encounter\_id} & UUID & FK; not null & Encounter for which the draft is generated. \\ \hline
+\texttt{created\_at} & timestamptz & Required; not null & Draft creation time. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1139,17 +1141,17 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{ProposalRevision attributes, logical types, nullability and constraints.}
+\caption{ProposalRevision attributes, types and constraints.}
 \label{tab:kashaf:dict-proposalrevision}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{proposal\_id} & UUID & No & PK/FK & Draft being versioned. \\ \hline
-\texttt{revision\_no} & integer & No & PK; >0 & Saved draft revision. \\ \hline
-\texttt{diagnosis\_text} & text & No & Required & Generated or physician-edited diagnosis draft. \\ \hline
-\texttt{treatment\_text} & text & No & Required & Generated or physician-edited treatment draft. \\ \hline
-\texttt{review\_status} & text & No & Check & Pending, approved or rejected. \\ \hline
-\texttt{created\_at} & timestamptz & No & Required & Time this revision is saved. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{proposal\_id} & UUID & PK/FK; not null & Draft being versioned. \\ \hline
+\texttt{revision\_no} & integer & PK; >0; not null & Saved draft revision. \\ \hline
+\texttt{diagnosis\_text} & text & Required; not null & Generated or physician-edited diagnosis draft. \\ \hline
+\texttt{treatment\_text} & text & Required; not null & Generated or physician-edited treatment draft. \\ \hline
+\texttt{review\_status} & text & Check; not null & Pending, approved or rejected. \\ \hline
+\texttt{created\_at} & timestamptz & Required; not null & Time this revision is saved. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1157,15 +1159,15 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{ProposalInput attributes, logical types, nullability and constraints.}
+\caption{ProposalInput attributes, types and constraints.}
 \label{tab:kashaf:dict-proposalinput}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{proposal\_id} & UUID & No & PK/FK pair & Draft using the input. \\ \hline
-\texttt{proposal\_revision} & integer & No & PK/FK pair & Exact draft revision. \\ \hline
-\texttt{input\_id} & UUID & No & PK/FK pair & Current or historical source input. \\ \hline
-\texttt{input\_revision} & integer & No & PK/FK pair & Exact source input revision used. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{proposal\_id} & UUID & PK/FK pair; not null & Draft using the input. \\ \hline
+\texttt{proposal\_revision} & integer & PK/FK pair; not null & Exact draft revision. \\ \hline
+\texttt{input\_id} & UUID & PK/FK pair; not null & Current or historical source input. \\ \hline
+\texttt{input\_revision} & integer & PK/FK pair; not null & Exact source input revision used. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1173,17 +1175,17 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{CriticReview attributes, logical types, nullability and constraints.}
+\caption{CriticReview attributes, types and constraints.}
 \label{tab:kashaf:dict-criticreview}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{critic\_id} & UUID & No & PK & Unique critic-review operation. \\ \hline
-\texttt{proposal\_id} & UUID & No & FK pair & Assessed clinical draft. \\ \hline
-\texttt{proposal\_revision} & integer & No & FK pair & Exact assessed revision. \\ \hline
-\texttt{review\_status} & text & No & Check & Pending, complete or failed. \\ \hline
-\texttt{findings\_text} & text & Conditional & Check & Safety and consistency findings when complete. \\ \hline
-\texttt{reviewed\_at} & timestamptz & Yes & Optional & Time the review completes or fails. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{critic\_id} & UUID & PK; not null & Unique critic-review operation. \\ \hline
+\texttt{proposal\_id} & UUID & FK pair; not null & Assessed clinical draft. \\ \hline
+\texttt{proposal\_revision} & integer & FK pair; not null & Exact assessed revision. \\ \hline
+\texttt{review\_status} & text & Check; not null & Pending, complete or failed. \\ \hline
+\texttt{findings\_text} & text & Check; not null & Safety and consistency findings when complete. \\ \hline
+\texttt{reviewed\_at} & timestamptz & Optional; nullable & Time the review completes or fails. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1191,15 +1193,15 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{EvidenceItem attributes, logical types, nullability and constraints.}
+\caption{EvidenceItem attributes, types and constraints.}
 \label{tab:kashaf:dict-evidenceitem}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{evidence\_id} & UUID & No & PK & Unique retrieved evidence item. \\ \hline
-\texttt{source\_ref} & text & No & Required & Citation or source reference. \\ \hline
-\texttt{passage\_text} & text & No & Required & Retrieved supporting passage. \\ \hline
-\texttt{retrieved\_at} & timestamptz & No & Required & Evidence retrieval time. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{evidence\_id} & UUID & PK; not null & Unique retrieved evidence item. \\ \hline
+\texttt{source\_ref} & text & Required; not null & Citation or source reference. \\ \hline
+\texttt{passage\_text} & text & Required; not null & Retrieved supporting passage. \\ \hline
+\texttt{retrieved\_at} & timestamptz & Required; not null & Evidence retrieval time. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1207,14 +1209,14 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{ProposalEvidence attributes, logical types, nullability and constraints.}
+\caption{ProposalEvidence attributes, types and constraints.}
 \label{tab:kashaf:dict-proposalevidence}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{proposal\_id} & UUID & No & PK/FK pair & Draft supported by evidence. \\ \hline
-\texttt{proposal\_revision} & integer & No & PK/FK pair & Exact supported revision. \\ \hline
-\texttt{evidence\_id} & UUID & No & PK/FK & Retrieved evidence item. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{proposal\_id} & UUID & PK/FK pair; not null & Draft supported by evidence. \\ \hline
+\texttt{proposal\_revision} & integer & PK/FK pair; not null & Exact supported revision. \\ \hline
+\texttt{evidence\_id} & UUID & PK/FK; not null & Retrieved evidence item. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1222,18 +1224,18 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{PhysicianAction attributes, logical types, nullability and constraints.}
+\caption{PhysicianAction attributes, types and constraints.}
 \label{tab:kashaf:dict-physicianaction}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{action\_id} & UUID & No & PK & Unique physician review action. \\ \hline
-\texttt{proposal\_id} & UUID & No & FK pair & Clinical draft being reviewed. \\ \hline
-\texttt{proposal\_revision} & integer & No & FK pair & Exact reviewed revision. \\ \hline
-\texttt{physician\_id} & UUID & No & FK & Physician performing the action. \\ \hline
-\texttt{action\_kind} & text & No & Check & Modify, approve or reject. \\ \hline
-\texttt{reviewed\_text} & text & No & Required & Snapshot of the content associated with the action. \\ \hline
-\texttt{action\_at} & timestamptz & No & Required & Action recording time. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{action\_id} & UUID & PK; not null & Unique physician review action. \\ \hline
+\texttt{proposal\_id} & UUID & FK pair; not null & Clinical draft being reviewed. \\ \hline
+\texttt{proposal\_revision} & integer & FK pair; not null & Exact reviewed revision. \\ \hline
+\texttt{physician\_id} & UUID & FK; not null & Physician performing the action. \\ \hline
+\texttt{action\_kind} & text & Check; not null & Modify, approve or reject. \\ \hline
+\texttt{reviewed\_text} & text & Required; not null & Snapshot of the content associated with the action. \\ \hline
+\texttt{action\_at} & timestamptz & Required; not null & Action recording time. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1241,17 +1243,17 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{ClinicalDecision attributes, logical types, nullability and constraints.}
+\caption{ClinicalDecision attributes, types and constraints.}
 \label{tab:kashaf:dict-clinicaldecision}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{decision\_id} & UUID & No & PK & Unique approved clinical decision. \\ \hline
-\texttt{proposal\_id} & UUID & No & FK pair & Originating clinical draft. \\ \hline
-\texttt{approved\_revision} & integer & No & FK pair; unique pair & Explicitly accepted draft revision. \\ \hline
-\texttt{approval\_action\_id} & UUID & No & Unique FK & Matching physician approval action. \\ \hline
-\texttt{decision\_text} & text & No & Required & Exact accepted diagnosis and treatment content. \\ \hline
-\texttt{recorded\_at} & timestamptz & No & Required & Decision recording time. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{decision\_id} & UUID & PK; not null & Unique approved clinical decision. \\ \hline
+\texttt{proposal\_id} & UUID & FK pair; not null & Originating clinical draft. \\ \hline
+\texttt{approved\_revision} & integer & FK pair; unique pair; not null & Explicitly accepted draft revision. \\ \hline
+\texttt{approval\_action\_id} & UUID & Unique FK; not null & Matching physician approval action. \\ \hline
+\texttt{decision\_text} & text & Required; not null & Exact accepted diagnosis and treatment content. \\ \hline
+\texttt{recorded\_at} & timestamptz & Required; not null & Decision recording time. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1259,18 +1261,18 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{SemanticMemory attributes, logical types, nullability and constraints.}
+\caption{SemanticMemory attributes, types and constraints.}
 \label{tab:kashaf:dict-semanticmemory}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{memory\_id} & UUID & No & PK & Unique semantic representation. \\ \hline
-\texttt{input\_id} & UUID & Conditional & FK pair & Input source when applicable. \\ \hline
-\texttt{input\_revision} & integer & Conditional & FK pair & Exact input-source revision. \\ \hline
-\texttt{decision\_id} & UUID & Conditional & FK & Approved-decision source when applicable. \\ \hline
-\texttt{embedding} & vector(TBD) & No & Required & Vector using the selected embedding dimension. \\ \hline
-\texttt{model\_ref} & text & No & Required & Embedding model identifier and version. \\ \hline
-\texttt{indexed\_at} & timestamptz & No & Required & Indexing time. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{memory\_id} & UUID & PK; not null & Unique semantic representation. \\ \hline
+\texttt{input\_id} & UUID & FK pair; not null & Input source when applicable. \\ \hline
+\texttt{input\_revision} & integer & FK pair; not null & Exact input-source revision. \\ \hline
+\texttt{decision\_id} & UUID & FK; not null & Approved-decision source when applicable. \\ \hline
+\texttt{embedding} & vector(TBD) & Required; not null & Vector using the selected embedding dimension. \\ \hline
+\texttt{model\_ref} & text & Required; not null & Embedding model identifier and version. \\ \hline
+\texttt{indexed\_at} & timestamptz & Required; not null & Indexing time. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1278,15 +1280,15 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{EvaluationCase attributes, logical types, nullability and constraints.}
+\caption{EvaluationCase attributes, types and constraints.}
 \label{tab:kashaf:dict-evaluationcase}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{case\_id} & UUID & No & PK & Unique permitted evaluation case. \\ \hline
-\texttt{encounter\_id} & UUID & No & FK & Case encounter supplying clinical context. \\ \hline
-\texttt{source\_ref} & text & No & Required & Dataset or synthetic-case provenance. \\ \hline
-\texttt{reference\_text} & text & Yes & Optional & Reference assessment when established. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{case\_id} & UUID & PK; not null & Unique permitted evaluation case. \\ \hline
+\texttt{encounter\_id} & UUID & FK; not null & Case encounter supplying clinical context. \\ \hline
+\texttt{source\_ref} & text & Required; not null & Dataset or synthetic-case provenance. \\ \hline
+\texttt{reference\_text} & text & Optional; nullable & Reference assessment when established. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1294,18 +1296,18 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{EvaluationRun attributes, logical types, nullability and constraints.}
+\caption{EvaluationRun attributes, types and constraints.}
 \label{tab:kashaf:dict-evaluationrun}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{run\_id} & UUID & No & PK & Unique configured research run. \\ \hline
-\texttt{variant} & text & No & Check & Single LLM, memory-augmented or full Zeest. \\ \hline
-\texttt{critic\_enabled} & boolean & No & Required & Declared critic configuration. \\ \hline
-\texttt{multimodal\_enabled} & boolean & No & Required & Declared multimodal configuration. \\ \hline
-\texttt{configuration} & jsonb & No & Required & Model/resource versions and comparison settings. \\ \hline
-\texttt{run\_status} & text & No & Check & Configured, running, complete or failed. \\ \hline
-\texttt{started\_at} & timestamptz & Yes & Optional & Actual run start time, when executed. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{run\_id} & UUID & PK; not null & Unique configured research run. \\ \hline
+\texttt{variant} & text & Check; not null & Single LLM, memory-augmented or full Zeest. \\ \hline
+\texttt{critic\_enabled} & boolean & Required; not null & Declared critic configuration. \\ \hline
+\texttt{multimodal\_enabled} & boolean & Required; not null & Declared multimodal configuration. \\ \hline
+\texttt{configuration} & jsonb & Required; not null & Model/resource versions and comparison settings. \\ \hline
+\texttt{run\_status} & text & Check; not null & Configured, running, complete or failed. \\ \hline
+\texttt{started\_at} & timestamptz & Optional; nullable & Actual run start time, when executed. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1313,28 +1315,22 @@ Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
 \setlength{\tabcolsep}{5pt}
 \centering
 \small
-\caption{EvaluationOutput attributes, logical types, nullability and constraints.}
+\caption{EvaluationOutput attributes, types and constraints.}
 \label{tab:kashaf:dict-evaluationoutput}
-\begin{tabular}{|p{0.22\textwidth}|p{0.13\textwidth}|p{0.11\textwidth}|p{0.18\textwidth}|p{0.24\textwidth}|}
+\begin{tabular}{|p{0.23\textwidth}|p{0.13\textwidth}|p{0.22\textwidth}|p{0.31\textwidth}|}
 \hline
-Attribute & Type & Nullable & Key / constraint & Meaning \\ \hline
-\texttt{output\_id} & UUID & No & PK & Unique run/case output. \\ \hline
-\texttt{run\_id} & UUID & No & FK; unique pair & Research run producing this output. \\ \hline
-\texttt{case\_id} & UUID & No & FK; unique pair & Evaluation case used by the run. \\ \hline
-\texttt{output\_text} & text & Conditional & Check & Recorded system output after execution. \\ \hline
-\texttt{output\_status} & text & No & Check & Pending, complete or failed. \\ \hline
-\texttt{elapsed\_ms} & numeric & Yes & Optional; >=0 & Measured duration only when available. \\ \hline
+Attribute & Type & Constraints & Meaning \\ \hline
+\texttt{output\_id} & UUID & PK; not null & Unique run/case output. \\ \hline
+\texttt{run\_id} & UUID & FK; unique pair; not null & Research run producing this output. \\ \hline
+\texttt{case\_id} & UUID & FK; unique pair; not null & Evaluation case used by the run. \\ \hline
+\texttt{output\_text} & text & Check; not null & Recorded system output after execution. \\ \hline
+\texttt{output\_status} & text & Check; not null & Pending, complete or failed. \\ \hline
+\texttt{elapsed\_ms} & numeric & Optional; >=0; nullable & Measured duration only when available. \\ \hline
 \end{tabular}
 \end{table}
-
-\clearpage
-The patient-owner association must be checked before reading or processing any encounter, input, draft, decision or action. Revision links use composite foreign keys, and saved clinical content remains immutable; corrections create a new revision. A draft may use earlier inputs from the same patient, preserving longitudinal context without crossing patient ownership. Approval validates the reviewed revision and matching physician action in one transaction. The accepted content must equal that revision, and a revision can produce at most one decision. Rejected or merely modified content remains excluded. Audit actions are retained, while critic findings and evidence must not be silently attributed to a different revision.
-
-An input revision requires textual content, a file reference or both according to its input kind. SemanticMemory requires exactly one source: an input/revision pair or an approved decision. Pending or failed processing cannot be presented as completed findings. A completed critic review requires findings, and a completed evaluation output requires recorded content. Each run/case pair has at most one evaluation output; declared configurations preserve the comparison conditions. Shared guideline sources do not grant access to another physician's clinical information. Numeric vector dimensions, model identifiers and execution capacities remain configuration choices. These constraints connect the dictionary to the access, provenance and decision-integrity requirements rather than assuming storage fields alone enforce them.
 
 \clearpage
 \section{ Risk Analysis}
-Table~\ref{tab:kashaf:risks} identifies the principal project risks.
 
 \begin{table}[htbp]
 \centering
@@ -1355,8 +1351,7 @@ R08 & Evaluation resources & Variant comparisons cannot answer the research ques
 \end{tabular}
 \end{table}
 
-\textcolor{red}{PLANNED: Risk responses and verification procedures will be assessed during implementation and evaluation; no mitigation outcome is reported.}
-
 % Finish this section's floats before the next heading.
 \clearpage
+Table~\ref{tab:kashaf:risks} outlines risks concerning resource permissions, supported clinical coverage, incomplete evidence, incorrect patient context and revision-specific approval. Their responses establish verification activities rather than completed mitigation outcomes. Dataset and model selection must confirm permitted use and task suitability before cases enter processing or comparison. Source identifiers and ownership checks must remain consistent through retrieval, analysis and review, while unavailable resources require visible failure states. Evidence inspection and critic findings support physician judgement without guaranteeing correctness. Approval must accept the reviewed revision and preserve matching action and decision records, including when requests fail or repeat. Integration tests and controlled comparisons are needed to assess these responses after implementation. The requirements, use cases, interface designs and logical schema therefore define a clinical workflow, while the methodology and architecture specify how its behaviour can be investigated. No performance result, executed acceptance test or demonstrated clinical safety outcome is established by these design artefacts.
 \endgroup

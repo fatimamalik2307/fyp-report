@@ -1,7 +1,8 @@
 @startuml
-title Planned evidence retrieval flow
+title Evidence retrieval design
 skinparam backgroundColor #FFFFFF
 skinparam shadowing false
+skinparam dpi 300
 skinparam defaultFontName Arial
 skinparam activity {
   BorderColor #2F3A4A

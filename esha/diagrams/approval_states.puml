@@ -3,7 +3,7 @@ skinparam backgroundColor #FFFFFF
 skinparam shadowing false
 skinparam defaultFontName "Helvetica", "Arial", sans-serif
 skinparam defaultFontSize 14
-skinparam dpi 160
+skinparam dpi 300
 skinparam nodesep 32
 skinparam ranksep 32
 
@@ -37,7 +37,7 @@ title Proposed Physician Approval States (D11)
 
 state "Case Inputs Confirmed" as CaseDrafting
 
-CaseDrafting --> SynthesisAndCritic : Physician requests recommendation (FR26)
+CaseDrafting --> SynthesisAndCritic : Physician requests recommendation (FR31)
 
 state "Synthesis and Critic Review" as SynthesisAndCritic
 
@@ -54,14 +54,14 @@ state "Indexed in Patient Memory\navailable to later encounters" as IndexedInSem
 state "Rejected Proposal\naudit retained; no clinical decision" as ExplicitlyRejected
 
 ' Transitions
-PendingReview --> ModifiedDraftPending : Modify (FR34)
+PendingReview --> ModifiedDraftPending : Modify (FR39)
 ModifiedDraftPending --> ModifiedDraftPending : Modify again
 
-PendingReview --> ExplicitlyApproved : Approve (FR33)
-ModifiedDraftPending --> ExplicitlyApproved : Approve revision (FR33)
+PendingReview --> ExplicitlyApproved : Approve (FR38)
+ModifiedDraftPending --> ExplicitlyApproved : Approve revision (FR38)
 
-PendingReview --> ExplicitlyRejected : Reject (FR35)
-ModifiedDraftPending --> ExplicitlyRejected : Reject revision (FR35)
+PendingReview --> ExplicitlyRejected : Reject (FR40)
+ModifiedDraftPending --> ExplicitlyRejected : Reject revision (FR40)
 
 ExplicitlyApproved --> IndexedInSemanticMemory : Index approved decision
 

@@ -1,29 +1,34 @@
 \documentclass{FastFyp}
+\renewcommand{\encodingdefault}{T1}
+\fontencoding{T1}\selectfont
 \begin{document}
-\newcommand{\supervisor}{SupervisorName}
+% Preserve the text-body position while accommodating the existing header.
+\setlength{\headheight}{14pt}
+\addtolength{\topmargin}{-2pt}
+\newcommand{\supervisor}{Miss Umm-e-Ammarah}
 \newcommand{\university}{National University of Computer and Emerging Sciences, Lahore}
-\newcommand{\fyptitle}{FYP Report Title}
-\newcommand{\degree}{BS}
-\newcommand{\Studentone}{Name of Student 1     Roll No. 1    BS(CS/DS/SE)} 
-\newcommand{\Studenttwo}{Name of Student 2     Roll No. 2    BS(CS/DS/SE)}
-\newcommand{\Studentthree}{Name of Student 3     Roll No. 3    BS(CS/DS/SE)}
-\date{\today}
+\newcommand{\fyptitle}{Zeest: An Agentic Medical Copilot}
+\newcommand{\degree}{BS(CS)}
+\newcommand{\Studentone}{Kashaf Ali\quad 23L-0691\quad BS(CS)}
+\newcommand{\Studenttwo}{Fatima Malik\quad 23L-0826\quad BS(CS)}
+\newcommand{\Studentthree}{Eesha Irfan\quad 23L-0836\quad BS(CS)}
+\date{10 October 2026}
 \renewcommand{\contentsname}{Table of Contents}
 
 \makeatletter
     \begin{titlepage}
         \includegraphics[width=0.2\linewidth]{Figures/nulogo.png}\hfill
         \includegraphics[width=0.2\linewidth]{Figures/fast.png}\\
-        \begin{center} 
+        \begin{center}
             {\large\bfseries \university}\\[7ex]
             \includegraphics[width=0.4\linewidth]{Figures/fastlogo.png}\\[8ex]
-            {\huge \bfseries  \fyptitle }\\[10ex] 
-            {\Studentone}\\{\Studenttwo}\\{\Studentthree}\\[4ex] 
+            {\huge \bfseries  \fyptitle }\\[10ex]
+            {\Studentone}\\{\Studenttwo}\\{\Studentthree}\\[4ex]
             {Supervisor: \supervisor} \\ [10ex]
             {Final Year Project}\\
             {\large \@date}
         \end{center}
-    \end{titlepage}    
+    \end{titlepage}
 \makeatother
 \frontmatter
 
@@ -38,36 +43,40 @@ This is to declare that the above publication was produced under the:
 
 is the sole contribution of the author(s), and no part hereof has been reproduced as it is the basis (cut and paste) that can be considered Plagiarism. All referenced parts have been used to argue the idea and cited properly. I/We will be responsible and liable for any consequence if a violation of this declaration is determined.
 \\[4ex]
-%% FYPTODO add the date and your names here
-Date: ..........................
+% Names and date populated during approved final integration.
+Date: 10 October 2026
 
 \begin{flushright}
-Name: ..........................
+Name: Kashaf Ali
 \\[3ex]
 Signature: ..........................
 \\[6ex]
-Name: ..........................
+Name: Fatima Malik
 \\[3ex]
 Signature: ..........................
 \\[6ex]
-Name: ..........................
+Name: Eesha Irfan
 \\[3ex]
 Signature: ..........................
 
-\end{flushright} 
+\end{flushright}
 
-\vspace{5 cm} %Aatira
- 
+\vspace{0.5 cm} %Aatira
+
 \hrule %Aatira
 
 \section*{Author's Declaration}
 This states Authors’ declaration that the work presented in the report is their own, and has not been submitted/presented previously to any other institution or organization.
 \pagebreak
 \section*{Abstract}
+\phantomsection
+\addcontentsline{toc}{chapter}{Abstract}
 \input{../fatima/abstract}%
-\pagebreak 
+\pagebreak
 
 \section*{Executive Summary}
+\phantomsection
+\addcontentsline{toc}{chapter}{Executive Summary}
 \input{../kashaf/executive_summary}%
 \pagebreak
 
@@ -76,11 +85,22 @@ This states Authors’ declaration that the work presented in the report is thei
 \tableofcontents
 
 \pagebreak
-\listoffigures	% comment this if there are no figures
-\addcontentsline{toc}{chapter}{List of Figures}
+% Register each list after its heading so the TOC points to its first page.
+\begingroup
+\makeatletter
+\let\zeestStartToc\@starttoc
+\def\@starttoc#1{\phantomsection\addcontentsline{toc}{chapter}{List of Figures}\zeestStartToc{#1}}
+\listoffigures
+\makeatother
+\endgroup
 \pagebreak
-\listoftables % comment this if there are no tables
-\addcontentsline{toc}{chapter}{List of Tables}
+\begingroup
+\makeatletter
+\let\zeestStartToc\@starttoc
+\def\@starttoc#1{\phantomsection\addcontentsline{toc}{chapter}{List of Tables}\zeestStartToc{#1}}
+\listoftables
+\makeatother
+\endgroup
 
 \mainmatter
 
@@ -99,5 +119,3 @@ This states Authors’ declaration that the work presented in the report is thei
 \appendix
 \input{../kashaf/appendix_a_template_examples}%
 \end{document}
-
-

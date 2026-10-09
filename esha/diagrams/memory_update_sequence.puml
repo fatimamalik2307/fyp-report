@@ -4,7 +4,7 @@ skinparam backgroundColor #FFFFFF
 skinparam shadowing false
 skinparam defaultFontName Arial
 skinparam defaultFontSize 14
-skinparam dpi 160
+skinparam dpi 300
 skinparam sequence {
   ArrowColor #2B6CB0
   ActorBorderColor #2B6CB0
@@ -32,7 +32,7 @@ participant "Memory\nIndexer" as Indexer
 database "pgvector\nPatient Memory" as Memory
 
 == Modify: audit only ==
-Doctor -> UI : Submit modified draft (UC06)
+Doctor -> UI : Submit modified draft (UC16)
 UI -> API : Save new proposal revision
 API -> Decision : Record revision + MODIFY action
 Decision -> Record : Persist pending revision and audit snapshot
@@ -40,13 +40,13 @@ Record --> Decision : Saved
 Decision --> UI : Return revised PENDING proposal
 note over Record, Memory : Modification does not update the clinical decision or patient memory.
 == Approve: clinical record then memory ==
-Doctor -> UI : Approve reviewed revision (UC05)
+Doctor -> UI : Approve reviewed revision (UC17)
 UI -> API : Submit explicit approval
 API -> Decision : Validate physician and revision
 group Atomic approval transaction
-  Decision -> Record : Record APPROVE action (FR37)
+  Decision -> Record : Record APPROVE action (FR42)
   Decision -> Record : Mark reviewed revision APPROVED
-  Decision -> Record : Create ClinicalDecision (FR36)
+  Decision -> Record : Create ClinicalDecision (FR41)
   Record --> Decision : Commit succeeds
 end
 Decision --> UI : Confirm approved clinical decision
@@ -55,13 +55,14 @@ Indexer -> Indexer : Generate embedding (model TBD)
 Indexer -> Memory : Store semantic memory link
 Memory --> Indexer : Indexed for later retrieval
 == Reject: audit retained, memory unchanged ==
-Doctor -> UI : Reject reviewed proposal (UC07)
+Doctor -> UI : Reject reviewed proposal (UC18)
 UI -> API : Submit rejection
 API -> Decision : Record REJECT action
-Decision -> Record : Mark rejected + retain audit snapshot (FR35, FR37)
+Decision -> Record : Mark rejected + retain audit snapshot (FR40, FR42)
 Record --> Decision : Rejection recorded
 Decision --> UI : Display rejected status
 note over Record, Memory
+  Authorised input revisions have separate source links.
   Pending and rejected proposals are excluded from
   ClinicalDecision and semantic patient memory.
 end note

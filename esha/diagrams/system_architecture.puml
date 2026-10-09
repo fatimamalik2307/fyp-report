@@ -4,13 +4,31 @@ skinparam backgroundColor #FFFFFF
 skinparam shadowing false
 skinparam defaultFontName "Helvetica", "Arial", sans-serif
 skinparam defaultFontSize 14
-skinparam dpi 160
+skinparam dpi 300
 skinparam nodesep 35
 skinparam ranksep 35
-skinparam package { BackgroundColor #F8F9FA; BorderColor #4A5568; FontColor #1A202C; FontStyle bold }
-skinparam component { BackgroundColor #EDF2F7; BorderColor #2B6CB0; FontColor #2D3748 }
-skinparam database { BackgroundColor #EBF8FF; BorderColor #2B6CB0; FontColor #2C5282 }
-skinparam arrow { Color #4A5568; Thickness 1.2; FontColor #2D3748; FontSize 12 }
+skinparam package {
+BackgroundColor #F8F9FA
+BorderColor #4A5568
+FontColor #1A202C
+FontStyle bold
+}
+skinparam component {
+BackgroundColor #EDF2F7
+BorderColor #2B6CB0
+FontColor #2D3748
+}
+skinparam database {
+BackgroundColor #EBF8FF
+BorderColor #2B6CB0
+FontColor #2C5282
+}
+skinparam arrow {
+Color #4A5568
+Thickness 1.2
+FontColor #2D3748
+FontSize 12
+}
 
 title Proposed Zeest System Architecture (D07)
 
@@ -35,6 +53,9 @@ package "Models and External Evidence" as Models {
   component [Gemini\nReasoning API] as GeminiModel
   component [Validated Imaging Classifier\nPyTorch checkpoint: TBD] as ImagingModel
   database "External Clinical Guidelines" as Guidelines
+  Transcriber -[hidden]down-> GeminiModel
+  GeminiModel -[hidden]down-> ImagingModel
+  ImagingModel -[hidden]down-> Guidelines
 }
 
 package "Hybrid Patient Memory" as DataLayer {
@@ -51,10 +72,6 @@ ReviewAgents --> GeminiModel : Reasoning and critique
 ReviewAgents --> Guidelines : Cited evidence
 ReviewAgents --> Pgvector : Evidence retrieval
 API --> PostgreSQL : Approved decision and audit
-PostgreSQL --> Pgvector : Approved memory only
+PostgreSQL --> Pgvector : Authorised input revisions / approved decisions
 
-note right of AgentLayer
-  PLANNED: components and flows are design specifications;
-  no prototype runtime or model integration exists yet.
-end note
 @enduml

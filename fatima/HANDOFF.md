@@ -37,3 +37,11 @@ Esha should align Chapter 6 to the current Chapter 4 requirement IDs and to the 
 ## Approved current assignment
 
 Chapters 3 and 5; Abstract. All owners maintain their own references. Current submission is six-chapter R&D Deliverable II; Chapters 7 through 10 are excluded. No other owner files, shared assembly files, class files or root documentation were edited during this work.
+
+## Approved final integration, 10 October 2026
+
+Final integration preserved the completed Chapters 3/5 and wrote the Abstract from the agreed design status. Prose is one 150-word paragraph per substantive heading. Literature uses numbered Research Overview, Critical Assessment and Relevance to Zeest headings; common terms are not repeatedly redefined. Seventeen distinct systems/models/datasets/methods remain in the summary. The unverified Huang citation was removed rather than represented as verified evidence. Med-PaLM 2 now cites its published Nature Medicine article; MedRAG has its full ACL Findings venue.
+
+Methodology FR identifiers match FR01--FR44: memory FR23--FR25, inputs FR14--FR22, specialists FR26--FR30, drafting/evidence/critic FR31--FR37 and physician review FR38--FR43. Approved-decision viewing remains FR44. The comparison diagram/table includes the three primary variants and critic/multimodal contrasts. The extra evidence contrast was removed. Case preparation precedes specialist analysis. Resource permissions and measurements remain outstanding execution dependencies.
+
+No commit or push was performed. main.tex is frozen again after this integration. Degree BS(CS) and date 10 October 2026 are assumptions to confirm before submission; signature spaces were preserved.

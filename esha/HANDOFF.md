@@ -38,3 +38,11 @@ Status: Chapter 6 and all six assigned design diagrams drafted on 8 October 2026
 - The concrete division of workflow roles between LangGraph and Google Agent Development Kit (ADK) remains an ongoing research exploration.
 - Production vector dimensionality and HNSW indexing parameters for pgvector depend on final embedding model selection.
 - Hardware specifications, server concurrency limits, and live clinical data integrations remain TBD.
+
+## Approved final integration, 10 October 2026
+
+Final integration condensed Chapter 6 to one 150-word paragraph per substantive heading and removed unsupported throughput, clinical-safety, regulatory-compliance and hallucination-elimination guarantees. Architecture remains design work, not an implemented runtime. Source relationships distinguish authorised input revisions from approved decisions; a pending draft cannot become an accepted fact through semantic indexing.
+
+All six design figures now have editable PlantUML sources. The domain model covers the same eighteen entities as Chapter 4. Review labels use modification UC16/FR39, approval UC17/FR38 and rejection UC18/FR40; action logging FR42 and accepted-decision recording FR41 are distinct. Diagrams were rerendered without the default size cap that clipped their right edge. Section barriers prevent design figures from drifting under a later main heading. The shared LangGraph source is canonical in Fatima's bibliography; PyTorch uses its conference venue.
+
+No commit or push was performed. main.tex is frozen again after this integration. Degree BS(CS) and date 10 October 2026 are assumptions to confirm before submission; signature spaces were preserved.
