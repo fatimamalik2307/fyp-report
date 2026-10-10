@@ -2,6 +2,22 @@
 \renewcommand{\encodingdefault}{T1}
 \fontencoding{T1}\selectfont
 \begin{document}
+% Feedback: top-align float pages and keep related items at a consistent separation.
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{12pt plus 2pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
+
+% Keep requirement tables with their source sections, using the existing caption mechanism.
+\makeatletter
+\newenvironment{reporttable}{\par\addvspace{10pt}\noindent\begin{minipage}{\textwidth}\def\@captype{table}\setstretch{1}}{\end{minipage}\par\addvspace{10pt}}
+\makeatother
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\bottomfraction}{0.9}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.7}
+
 % Preserve the text-body position while accommodating the existing header.
 \setlength{\headheight}{14pt}
 \addtolength{\topmargin}{-2pt}
@@ -9,9 +25,9 @@
 \newcommand{\university}{National University of Computer and Emerging Sciences, Lahore}
 \newcommand{\fyptitle}{Zeest: An Agentic Medical Copilot}
 \newcommand{\degree}{BS(CS)}
-\newcommand{\Studentone}{Kashaf Ali\quad 23L-0691\quad BS(CS)}
-\newcommand{\Studenttwo}{Fatima Malik\quad 23L-0826\quad BS(CS)}
-\newcommand{\Studentthree}{Eesha Irfan\quad 23L-0836\quad BS(CS)}
+\newcommand{\Studentone}{Kashaf Ali 23L-0691 BS(CS)}
+\newcommand{\Studenttwo}{Fatima Malik 23L-0826 BS(CS)}
+\newcommand{\Studentthree}{Eesha Irfan 23L-0836 BS(CS)}
 \date{10 October 2026}
 \renewcommand{\contentsname}{Table of Contents}
 
@@ -66,17 +82,13 @@ Signature: ..........................
 \hrule %Aatira
 
 \section*{Author's Declaration}
-This states Authors’ declaration that the work presented in the report is their own, and has not been submitted/presented previously to any other institution or organization.
+This states Authors' declaration that the work presented in the report is their own, and has not been submitted/presented previously to any other institution or organization.
 \pagebreak
 \section*{Abstract}
-\phantomsection
-\addcontentsline{toc}{chapter}{Abstract}
 \input{../fatima/abstract}%
 \pagebreak
 
 \section*{Executive Summary}
-\phantomsection
-\addcontentsline{toc}{chapter}{Executive Summary}
 \input{../kashaf/executive_summary}%
 \pagebreak
 

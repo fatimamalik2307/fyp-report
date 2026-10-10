@@ -5,7 +5,7 @@
 \fontencoding{T1}\selectfont
 \chapter{Proposed Approach and Methodology}
 
-Zeest uses an integration methodology rather than a new diagnostic algorithm. The method begins with a physician-selected patient and encounter, then prepares consultation notes, inputs and longitudinal history. Existing imaging models, language-model capability and retrieval methods act as supporting components, while the project contribution is the way their outputs connect to patient memory, evidence and physician approval. Chapter~4 defines the workflow for navigation, transcription, input handling, memory retrieval, draft generation, critic review and revision-specific decisions. The methodology applies these requirements through a controlled research procedure in which each stage keeps patient, encounter and source context visible, so a generated draft can be inspected rather than treated as final. Controlled comparisons use a shared case set and recorded configurations so improvements cannot be inferred from architectural complexity alone. Source information remains separate from accepted decisions, and unavailable clinical resources remain explicit dependencies. The evaluation procedure does not supply unmeasured outcomes.
+An integration methodology establishes how inputs, processing stages and evaluation procedures connect. The following sections describe case preparation, memory retrieval, specialist analysis, evidence handling and controlled comparisons, together with the dependencies needed to assess their contributions.
 
 \section{Case Preparation and Input Handling}
 
@@ -19,7 +19,7 @@ Hybrid memory connects the encounter to historical context. Relational records p
 
 Figure~\ref{fig:fatima:method-pipeline} shows the processing pipeline used to coordinate the Zeest workflow. The physician-facing interface produces case inputs, while hybrid memory supplies patient history. The Clinical Case Agent combines those inputs and sends modality-specific information to the Imaging, Laboratory and Medication Safety agents. The Imaging Agent uses a validated pre-trained model only for imaging tasks. The Laboratory Agent analyses supplied laboratory information, and the Medication Safety Agent checks medication context against a resource still to be selected. The Evidence and RAG Agent retrieves external material with source references. The Clinical Reasoning Agent drafts the diagnosis and treatment proposal, and the Safety and Critic Agent checks it before physician review. The pipeline separates data movement from decision authority. Agents may prepare, analyse, retrieve or review information, but they do not record a final clinical decision. The physician sees the generated draft with evidence and critic findings, then approves, modifies or rejects it.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=0.78\textheight,keepaspectratio]{Figures/fatima_D04_method_pipeline.png}
 \caption{Proposed Zeest methodology pipeline connecting consultation inputs, hybrid memory, specialist agents, evidence retrieval, clinical drafting, critic review and physician decision controls.}
@@ -30,7 +30,7 @@ Figure~\ref{fig:fatima:method-pipeline} shows the processing pipeline used to co
 
 The candidate data and model resources are identified in the reviewed literature. MIMIC-IV supports de-identified longitudinal EHR cases, while MIMIC-CXR and CheXpert support chest radiograph tasks. PubMed or guideline sources may support evidence retrieval, and Synthea can support synthetic patient cases.~\cite{zeestA:mimicIV,zeestB:mimiccxr,zeestB:chexpert,zeestB:synthea} These resources are not interchangeable. Longitudinal memory needs encounter context, while imaging cases must match the selected model's supported labels. Evidence retrieval needs a permitted corpus and citation preservation. Medication review requires a knowledge resource with suitable coverage, and semantic memory requires an embedding model compatible with the vector store. Table~\ref{tab:fatima:dataset-register} records each candidate's role, status and unresolved dependency so final selection is not assumed before implementation. a candidate resource becomes usable only after access, permitted use, preprocessing needs and clinical-domain fit are confirmed. It gives later evaluation work a checklist for deciding which cases and modalities can be included in the ablation study. Resource choices remain documented dependencies.
 
-\begin{table}[htbp]
+\begin{reporttable}
 \centering
 \scriptsize
 \caption{Proposed dataset, model and resource register for Zeest methodology.}
@@ -47,7 +47,7 @@ Synthea \cite{zeestB:synthea} & Synthetic workflow cases. & Candidate source. & 
 Medication knowledge resource & Medication safety checking. & Not selected. & Resource availability and interaction coverage. \\ \hline
 Embedding model & Semantic memory and retrieval. & Not selected. & Dimension, domain suitability and pgvector storage. \\ \hline
 \end{tabular}
-\end{table}
+\end{reporttable}
 
 \section{Data Preprocessing}
 
@@ -57,7 +57,7 @@ Preprocessing depends on the chosen resources, but Zeest's workflow already defi
 
 The evidence method separates patient-specific context from external clinical knowledge. Patient context comes from the encounter, corrected notes, retrieved history and specialist findings. External knowledge comes from guideline, literature or medical reference material selected for retrieval. The Evidence and RAG Agent forms a query from the selected case context, retrieves candidate passages, filters or ranks them by relevance and returns supporting text with citations. Figure~\ref{fig:fatima:evidence-retrieval} shows this flow. The Clinical Reasoning Agent may use retrieved evidence when drafting a diagnosis and treatment plan, but the evidence must remain visible to the responsible physician. This prevents a black box answer and lets the critic identify unsupported claims, missing evidence or contradictions. The procedure supports traceability because a draft should identify which retrieved passages were used and where they came from. The physician can then judge whether the support fits the patient and whether the draft should be approved, edited or rejected.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.92\textwidth,height=0.62\textheight,keepaspectratio]{Figures/fatima_D06_evidence_retrieval.png}
 \caption{Patient context and external sources supplying cited evidence to the clinical draft.}
@@ -68,14 +68,14 @@ The evidence method separates patient-specific context from external clinical kn
 
 The ablation protocol answers Zeest's evaluation questions. The comparison includes a single LLM baseline, a memory-augmented variant and the full Zeest system. The baseline receives the case prompt only. The memory variant adds retrieved patient history, while the full system adds specialist findings, evidence retrieval and critic review. Figure~\ref{fig:fatima:ablation-protocol} shows how the same case set flows through the variants and into one assessment process. Additional contrasts examine critic and multimodal contribution where the cases support them. The same reference judgement process must be used for every variant. Table~\ref{tab:fatima:experiment-protocol} defines the variants and comparison controls. Outputs should be assessed for case relevance, patient-history use, evidence support, consistency with specialist findings, critic handling and physician reviewability. Metrics, sample counts, rubrics and reviewer roles remain unresolved. Possible measures include agreement with a reference judgement, citation relevance, unsupported-claim count, error categories and physician review effort. Measured outcomes must remain separate from this evaluation procedure.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.96\textwidth,height=0.66\textheight,keepaspectratio]{Figures/fatima_D05_ablation_protocol.png}
 \caption{Single LLM, memory-augmented and full-system comparisons using shared cases and assessment.}
 \label{fig:fatima:ablation-protocol}
 \end{figure}
 
-\begin{table}[htbp]
+\begin{reporttable}
 \centering
 \scriptsize
 \caption{Planned ablation and evaluation protocol for Zeest variants.}
@@ -89,13 +89,13 @@ Full Zeest & Case, memory, specialist findings, evidence and critic review. & In
 Critic contrast & Full pipeline with and without critic findings. & Unsupported or contradictory output handling. & Planned control. \\ \hline
 Multimodal contrast & Text-only case versus supported multimodal case. & Contribution of imaging/lab/medication findings. & Planned control. \\ \hline
 \end{tabular}
-\end{table}
+\end{reporttable}
 
 \section{Methodological Traceability}
 
 The methodology traces to the objectives and requirements in Chapters~2 and~4. Hybrid memory supports O1, FR23 and FR24. Transcription and note correction support O2 and FR14 through FR18. Specialist agents support O3 and FR25 through FR30. Imaging integration supports O4 and FR26, while evidence retrieval supports O5, FR32 and FR36. Clinical draft generation supports O6, FR33 and FR34. Critic review supports O7, FR35 and FR37. Physician approval, modification, rejection and audit support O8 and FR38 through FR43. The ablation protocol supports O9 and RR01 through RR04. Table~\ref{tab:fatima:method-trace} summarises this mapping so design and evaluation work can remain aligned with the requirements. This traceability matters because the methodology should evaluate the same workflow described in the requirements, not a different or simplified system. Changes to resources or agent responsibilities must preserve these verification relationships. Patient ownership and accepted-decision views remain required even when an evaluation variant omits analytical components.
 
-\begin{table}[htbp]
+\begin{reporttable}
 \centering
 \small
 \caption{Traceability between methodology stages and current requirement areas.}
@@ -111,7 +111,7 @@ Clinical draft and critic & FR33--FR37 & Review draft consistency and critic fin
 Physician decision workflow & FR38--FR43 & Verify revision-specific approval and audit records. \\ \hline
 Ablation framework & RR01--RR04 & Compare variants using shared cases and rubric. \\ \hline
 \end{tabular}
-\end{table}
+\end{reporttable}
 
 \section{Dependencies and Open Method Decisions}
 

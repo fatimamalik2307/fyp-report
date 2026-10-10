@@ -5,32 +5,23 @@
 \fontencoding{T1}\selectfont
 \chapter{Literature Review / Related Work}
 
-Clinical decision support, medical language models, imaging analysis and retrieval systems each address a part of the problem that Zeest brings together. Existing tools can provide references, differential diagnosis suggestions or patient record support, but they do not by themselves establish a longitudinal, physician-controlled, multimodal reasoning workflow. Recent language models show strong performance on medical question answering, while biomedical language models improve representation of and scientific text. Imaging models and chest radiograph datasets provide validated groundwork for diagnostic inputs. Retrieval-augmented generation and medical retrieval methods show how external evidence can be supplied to a generator, and agentic reasoning work motivates stepwise decomposition. The related work is reviewed by capability area rather than as a single comparison list. The assessment distinguishes published component capabilities from the ownership, provenance and review controls needed for encounter-based assistance. Those controls define the integration gap without assuming that existing clinical tools lack every related feature.
+Clinical decision support draws on medical language models, imaging analysis, evidence retrieval and agent coordination. The following review examines related applications, methods and resources, comparing their capabilities and limitations to identify the research gap.
 
 \section{Definitions, Acronyms, and Abbreviations}
 
-Table~\ref{tab:fatima:terms} supplements the common terminology in Table~\ref{tab:kashaf:terms}.
+Additional abbreviations used in the literature review are listed below.
 
-\begin{table}[htbp]
-\centering
-\small
-\caption{Additional abbreviations used in the literature review.}
-\label{tab:fatima:terms}
-\begin{tabular}{|p{0.24\textwidth}|p{0.66\textwidth}|}
-\hline
-Term & Meaning \\ \hline
-EMR & Electronic Medical Record. \\ \hline
-EHR & Electronic Health Record. \\ \hline
-NLP & Natural Language Processing. \\ \hline
-CXR & Chest X-ray. \\ \hline
-MIMIC & Medical Information Mart for Intensive Care. \\ \hline
-ClinicalBERT & Clinical Bidirectional Encoder Representations from Transformers. \\ \hline
-BioGPT & Biomedical Generative Pre-trained Transformer. \\ \hline
-MedCPT & Medical Contrastive Pre-trained Transformer. \\ \hline
-ADK & Agent Development Kit. \\ \hline
-\end{tabular}
-\end{table}
-\clearpage
+\noindent\textbf{EMR:} Electronic Medical Record.\\
+\noindent\textbf{EHR:} Electronic Health Record.\\
+\noindent\textbf{NLP:} Natural Language Processing.\\
+\noindent\textbf{CXR:} Chest X-ray.\\
+\noindent\textbf{MIMIC:} Medical Information Mart for Intensive Care.\\
+\noindent\textbf{ClinicalBERT:} Clinical Bidirectional Encoder Representations from Transformers.\\
+\noindent\textbf{BioGPT:} Biomedical Generative Pre-trained Transformer.\\
+\noindent\textbf{MedCPT:} Medical Contrastive Pre-trained Transformer.\\
+\noindent\textbf{ReAct:} Reasoning and Acting: a framework combining reasoning traces with tool actions.\\
+\noindent\textbf{ADK:} Agent Development Kit.
+
 
 \section{Detailed Literature Review}
 
@@ -91,7 +82,6 @@ The evidence literature supports two design principles for the system. First, ev
 \subsection{Agentic Reasoning and Orchestration}
 \subsubsection{Research Overview}
 
-ReAct combines reasoning traces with actions, showing how a language model can alternate between thinking and interacting with external tools.~\cite{zeestB:react} Its relevance to Zeest is conceptual: clinical support can benefit from separating reasoning steps and tool use of relying on a single monolithic generation. LangGraph and Google ADK are identified as candidate candidate orchestration technologies for agentic workflows.~\cite{zeestB:langgraph,zeestB:googleadk} They are because Zeest includes specialised Patient Memory, Clinical Case, Imaging, Laboratory, Medication Safety, Evidence and RAG, Clinical Reasoning, and Safety and Critic agents. However, the exact division between LangGraph and ADK remains unresolved in the integration design. The literature and tool documentation support the practical possibility of orchestration but do not settle Zeest's final implementation structure. Chapter~5 should describe the processing responsibilities and information flow without inventing a completed orchestration design. The described capability informs a component choice without establishing that it is already integrated or clinically validated in Zeest.
 
 \subsubsection{Critical Assessment}
 
@@ -118,12 +108,15 @@ The dataset literature is related to Zeest because the project needs longitudina
 
 Table~\ref{tab:fatima:literature-summary} summarises the principal works reviewed for Zeest. The table mixes research papers, datasets and established clinical systems because the project is an R\&D integration effort. Each item is included only for the capability it supports: clinical reference, record organisation, medical language modelling, imaging, retrieval, orchestration or evaluation data. The limitations column explains why the item does not already solve the Zeest problem. This distinction is necessary because Zeest combines several mature areas into one physician-controlled workflow. No row is treated as proof that Zeest has been implemented or evaluated. Instead, the table identifies the evidence base used to design the methodology and to justify the gaps addressed by the system. The comparison retains the separation between a reviewed capability and a physician workflow. Source evidence supports component decisions, while Zeest still requires ownership, revision links and explicit approval. The seventeen entries provide the evidence base for component selection.
 
-\begin{table}[htbp]
+\begin{reporttable}
 \centering
-\scriptsize
-\caption{Summary of reviewed systems, models, datasets and methods relevant to Zeest.}
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Summary of literature review.}
 \label{tab:fatima:literature-summary}
-\begin{tabular}{|p{0.18\textwidth}|p{0.22\textwidth}|p{0.27\textwidth}|p{0.20\textwidth}|}
+{\small\itshape This table compares the capabilities, relevance and limitations of the reviewed work.\par}
+\smallskip
+\begin{tabular}{|p{0.18\textwidth}|p{0.21\textwidth}|p{0.29\textwidth}|p{0.22\textwidth}|}
 \hline
 Work & Method or capability & Relevance to Zeest & Limitation for Zeest \\ \hline
 Isabel DDx \cite{zeestB:isabel} & Differential diagnosis support system. & Shows clinical value of diagnosis assistance. & Not a longitudinal multimodal agent workflow. \\ \hline
@@ -144,7 +137,8 @@ MIMIC-IV \cite{zeestA:mimicIV} & De-identified EHR dataset. & Candidate source f
 MIMIC-CXR \cite{zeestB:mimiccxr} & De-identified chest radiographs and reports. & Candidate source for imaging and notes. & Does not by itself provide a complete evaluation protocol. \\ \hline
 Synthea \cite{zeestB:synthea} & Synthetic patient generation. & Supports safe development case creation. & Synthetic cases may not capture real clinical complexity. \\ \hline
 \end{tabular}
-\end{table}
+\end{reporttable}
+
 
 \section{Conclusion}
 

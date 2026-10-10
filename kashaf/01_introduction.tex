@@ -5,7 +5,7 @@
 \fontencoding{T1}\selectfont
 \chapter{Introduction}
 
-Patient information accumulates across consultations, laboratory investigations, medical images and medication records. Reviewing these sources separately can disconnect the current encounter from earlier findings, while consultation documentation adds another preparation task. A physician needs relevant historical context alongside readable notes and current clinical inputs. Zeest combines these needs in an agentic medical copilot with relational and semantic patient memory, real-time transcription and coordinated specialist analysis. Existing validated models and knowledge resources contribute imaging, laboratory and medication findings, which retain their source relationships. The Evidence and RAG Agent retrieves clinical guidelines with citations, and the Clinical Reasoning Agent generates a diagnosis and treatment draft. The Safety and Critic Agent reviews the draft before presentation. The physician inspects its findings, evidence and critic review, then approves, modifies or rejects it. Only explicitly approved content becomes a recorded clinical decision; audit history preserves the review actions and encounter context across the connected workflow.
+Clinical decision support brings together patient information, documentation and analytical assistance. The following sections establish the background, purpose, intended readership and terminology needed to understand the work, followed by an outline of the remaining chapters.
 
 \section{Purpose of this Document}
 
@@ -17,35 +17,26 @@ The primary audience includes the project supervisor, academic evaluators and th
 
 \section{Definitions, Acronyms, and Abbreviations}
 
-Table~\ref{tab:kashaf:terms} defines the terminology used for Zeest.
+Key terms and abbreviations are defined below.
 
-\begin{table}[htbp]
-\centering
-\small
-\caption{Abbreviations and terms used to describe Zeest and its clinical workflow.}
-\label{tab:kashaf:terms}
-\begin{tabular}{|p{0.24\textwidth}|p{0.66\textwidth}|}
-\hline
-Term & Meaning \\ \hline
-AI & Artificial Intelligence. \\ \hline
-LLM & Large Language Model. \\ \hline
-CDSS & Clinical Decision Support System. \\ \hline
-RAG & Retrieval-Augmented Generation. \\ \hline
-SDG & Sustainable Development Goal. \\ \hline
-Encounter & An identifiable consultation or visit associated with a patient. \\ \hline
-Longitudinal memory & Patient-specific information retained and retrieved across encounters. \\ \hline
-Hybrid memory & Relational records combined with semantic vector representations. \\ \hline
-Multimodal input & Clinical information represented through notes, images, laboratory information and medication context. \\ \hline
-Agent & A specialised processing component with a defined responsibility. \\ \hline
-Clinical draft & A generated diagnosis and treatment plan awaiting physician review. \\ \hline
-Approved decision & Clinical content explicitly accepted by the physician for recording. \\ \hline
-Audit history & Recorded physician actions associated with review and decision making. \\ \hline
-Ablation study & A comparison of system variants used to examine component contributions. \\ \hline
-\end{tabular}
-\end{table}
+\noindent\textbf{AI:} Artificial Intelligence.\\
+\noindent\textbf{LLM:} Large Language Model.\\
+\noindent\textbf{CDSS:} Clinical Decision Support System.\\
+\noindent\textbf{RAG:} Retrieval-Augmented Generation.\\
+\noindent\textbf{SDG:} Sustainable Development Goal.\\
+\noindent\textbf{Encounter:} An identifiable consultation or visit associated with a patient.\\
+\noindent\textbf{Longitudinal memory:} Patient-specific information retained and retrieved across encounters.\\
+\noindent\textbf{Hybrid memory:} Relational records combined with semantic vector representations.\\
+\noindent\textbf{Multimodal input:} Clinical information represented through notes, images, laboratory information and medication context.\\
+\noindent\textbf{Agent:} A specialised processing component with a defined responsibility.\\
+\noindent\textbf{Clinical draft:} A generated diagnosis and treatment plan awaiting physician review.\\
+\noindent\textbf{Approved decision:} Clinical content explicitly accepted by the physician for recording.\\
+\noindent\textbf{Audit history:} Recorded physician actions associated with review and decision making.\\
+\noindent\textbf{Ablation study:} A comparison of system variants used to examine component contributions.
+
 
 % Finish this section's floats before the next heading.
-\clearpage
+
 \section{Conclusion}
 
 Chapter~1 introduces the information problem and the purpose of Zeest. Chapter~2 defines the vision, objectives, scope and stakeholder needs. Chapter~3 examines the related research and applications that inform the technical approach. Chapter~4 specifies features, functional and non-functional requirements, use cases, resources, interface designs, data relationships and risks. Chapter~5 develops the methodology and comparative evaluation approach. Chapter~6 presents the high-level and low-level design of the integrated workflow. References identify the supporting sources, and the Appendix contains supplementary material. Together, these chapters connect the clinical motivation to a system design and an evaluation framework for investigating memory, reasoning, critic review and multimodal contributions. The resulting structure preserves the distinction between recorded observations, generated recommendations and accepted decisions. Source-aware records and review actions establish the connection between clinical assistance and accountability. Subsequent implementation must preserve these relationships before comparative evaluation can establish the value of each component.

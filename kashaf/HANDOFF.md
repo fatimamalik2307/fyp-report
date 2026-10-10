@@ -179,3 +179,15 @@ Final integration covered Chapters 1/2/4, Executive Summary and Appendix. Ordina
 The eighteen-entity dictionary retains all attributes and nullability in a combined Constraints column. Both screen-thumbnail and Physician/Zeest swimlane navigation remain. GUI exports are genuine 2x browser screenshots of static mockups. The SDG display isolates Goal 3 while preserving the original grid asset. Appendix A replaces unrelated demonstrations with objective traceability and configuration decisions.
 
 No commit or push was performed. main.tex is frozen again after this integration. Degree BS(CS) and date 10 October 2026 are assumptions to confirm before submission; signature spaces were preserved.
+
+## Approved feedback revision, 10 October 2026
+
+Expanded the Executive Summary to one page, added numbered Chapter 2/4 conclusions, replaced Stakeholders Summary with prose, enlarged GUI typography, exported complete content without excess canvas and paired suitable views at full width. Kept both navigation flows. Enlarged the primary flow and ER figures using existing graphicx rotation. Replaced the blurry SDG crop with the official 1500-pixel UN Goal 3 icon while preserving the original grid. All original required sections remain; signatures require the students.
+
+This is a user-authorised cross-member integration exception. Normal ownership and main.tex freezing resume after the task. The prototype remains unbuilt. No commit or push was performed.
+
+
+Latest correction: all rotated report figures removed at user request. Illustrations are upright on portrait pages; primary navigation uses two columns. Literature glossary ReAct row repaired.
+
+
+User-approved spacing revision: short neutral chapter introductions; no manual section page breaks; tables remain in source order. Abstract and Executive Summary retained as template pages but removed from TOC. Acronyms use definition lines. Appendix introduction condensed; SDG caption and explanatory line added; problem statement follows problem, effect and solution.

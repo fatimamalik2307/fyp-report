@@ -46,3 +46,15 @@ Final integration condensed Chapter 6 to one 150-word paragraph per substantive 
 All six design figures now have editable PlantUML sources. The domain model covers the same eighteen entities as Chapter 4. Review labels use modification UC16/FR39, approval UC17/FR38 and rejection UC18/FR40; action logging FR42 and accepted-decision recording FR41 are distinct. Diagrams were rerendered without the default size cap that clipped their right edge. Section barriers prevent design figures from drifting under a later main heading. The shared LangGraph source is canonical in Fatima's bibliography; PyTorch uses its conference venue.
 
 No commit or push was performed. main.tex is frozen again after this integration. Degree BS(CS) and date 10 October 2026 are assumptions to confirm before submission; signature spaces were preserved.
+
+## Approved feedback revision, 10 October 2026
+
+Added a numbered Chapter 6 conclusion, enlarged wide diagrams through existing graphicx rotation and switched diagram inclusion to vector PDF assets. The full eighteen-entity domain model uses monochrome styling, larger labels and clearer routing. PlantUML and SVG sources stay in esha/diagrams/; PDF renders stay in Report template/Figures/. No class or package changes were made.
+
+This is a user-authorised cross-member integration exception. Normal ownership and main.tex freezing resume after the task. The prototype remains unbuilt. No commit or push was performed.
+
+
+Latest correction: all rotated report figures removed at user request. Illustrations are upright on portrait pages; primary navigation uses two columns. Literature glossary ReAct row repaired.
+
+
+User-approved spacing revision: short neutral chapter introductions; no manual section page breaks; tables remain in source order. Abstract and Executive Summary retained as template pages but removed from TOC. Acronyms use definition lines. Appendix introduction condensed; SDG caption and explanatory line added; problem statement follows problem, effect and solution.

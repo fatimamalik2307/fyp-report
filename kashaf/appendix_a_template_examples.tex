@@ -1,12 +1,15 @@
 % Owner: Kashaf Ali / Member A. Approved final integration.
+\begingroup
+\renewcommand{\encodingdefault}{T1}
+\fontencoding{T1}\selectfont
 \chapter{Traceability and Design Decisions}
 
-The supplementary tables consolidate the relationships between Zeest's objectives, clinical workflow and intended verification activities. They distinguish implementation checks from comparative research so that a requirement is not considered satisfied merely because a diagram or interface design exists. Patient ownership applies throughout clinical work, input and draft revisions preserve source content, and explicit approval determines which reviewed content becomes a clinical decision. Comparative evaluation uses permitted cases and recorded configurations, with the same reference procedure applied across variants. Candidate datasets, models and knowledge resources require selection and permission checks before use. The design provides no measured outcomes, dataset-access guarantee or claim of clinical deployment. Configuration-dependent values therefore remain identified decisions rather than invented numbers. The tables support implementation and assessment while preserving the distinction between source observations, generated recommendations and accepted decisions. They also connect changes to requirements with the corresponding methodology and architecture responsibilities established across the six chapters.
+The following tables provide supplementary objective traceability and configuration decisions for development and evaluation.
 
 \section{Objective Traceability}
 Table~\ref{tab:kashaf:appendix-trace} connects the nine objectives with their requirements and intended verification.
 
-\begin{table}[htbp]
+\begin{reporttable}
 \centering
 \small
 \caption{Objectives, requirement locations and intended verification.}
@@ -24,26 +27,9 @@ O7 Critic review & FR35, FR37 & Compare concerns and outputs with and without cr
 O8 Physician control & FR38--FR44 & Check revision-specific actions, decisions and audit records. \\ \hline
 O9 Comparative evaluation & RR01--RR04 & Compare the baseline, memory variant and full system under common conditions. \\ \hline
 \end{tabular}
-\end{table}
-\clearpage
-\section{Configuration Decisions}
-Table~\ref{tab:kashaf:appendix-decisions} separates established boundaries from choices required before execution.
+\end{reporttable}
 
-\begin{table}[htbp]
-\centering
-\small
-\caption{Established design boundaries and outstanding execution choices.}
-\label{tab:kashaf:appendix-decisions}
-\begin{tabular}{|p{0.26\textwidth}|p{0.64\textwidth}|}
-\hline
-Item & Decision or required selection \\ \hline
-Patient access & One responsible physician per patient; ownership checks on all clinical operations. \\ \hline
-Clinical decision & Explicit approval of the exact saved draft revision; modification alone is not approval. \\ \hline
-Memory sources & Authorised input revisions or approved decisions; pending drafts are not accepted facts. \\ \hline
-Data and domain & Select permitted de-identified or synthetic cases with suitable model coverage. \\ \hline
-Analytical resources & Select transcription, imaging, embedding and medication resources and record their restrictions. \\ \hline
-Evidence & Select a permitted corpus, retrieval configuration and citation-preserving passage representation. \\ \hline
-Orchestration & Document the LangGraph and Google ADK responsibility split. \\ \hline
-Evaluation & Define case count, reference judgements, rubric, workload and thresholds before executing comparisons. \\ \hline
-\end{tabular}
-\end{table}
+\section{Configuration Decisions}
+Patient access is restricted to the responsible physician. Clinical decisions require approval of the exact saved revision; pending drafts are excluded from accepted memory. Before evaluation, select permitted cases, analytical models, evidence sources and orchestration responsibilities. Record the case count, reference process, rubric, workload and thresholds with each comparison configuration.
+
+\endgroup

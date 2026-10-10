@@ -4,7 +4,7 @@ Scope approved by the user on 4 October 2026: Chapters 1 through 6, compulsory A
 
 ## Sources and rules
 
-F26-098.docx alone supplies project facts. The user-supplied Deliverable II instruction controls current chapter inclusion; template/class/rules control the retained headings and formatting. Sample reports guide presentation only. Read README.md, Rules.txt and your START_HERE.md. Never edit FastFyp.cls or add packages. main.tex is frozen after this scope change. The latest approved rule is one 150-word substantive paragraph per heading, with brief table introductions, captions, cells and bullets exempt; Abstract is one paragraph of 50 to 125 words and three to five sentences. Executive Summary is one plain 150-word paragraph under the latest instruction.
+F26-098.docx alone supplies project facts. The user-supplied Deliverable II instruction controls current chapter inclusion; template/class/rules control the retained headings and formatting. Sample reports guide presentation only. Read README.md, Rules.txt and your START_HERE.md. Never edit FastFyp.cls or add packages. main.tex is frozen after this scope change. Keep body sections concise, normally around 150 words; the approved feedback revision permits 150--250 words where needed, with brief table introductions, captions, cells and bullets exempt; Abstract is one paragraph of 50 to 125 words and three to five sentences. Executive Summary is about one page of plain paragraphs, each within 150--250 words.
 
 ## Chapter list and ownership
 
@@ -177,3 +177,5 @@ If a diagram/source appendix is later justified: why was it placed outside the c
 Confirm SDG alignment, operational metric definitions and appropriate reference-case review resources. Choose only appendix material that supports retained chapters and the proposal. Do not add product features beyond the proposal. No chapter content is authorized by this coordinator setup task.
 
 Final integration status: see kashaf/FINALISATION_PLAN.md and the member HANDOFF.md entries dated 10 October 2026. Historical setup and workload estimates below remain planning context.
+
+Feedback revision approved 10 October 2026: concise substantive paragraphs remain within 150--250 words; the Executive Summary may use two plain paragraphs to fill about one page. Added numbered conclusions in Chapters 2, 4 and 6 supplement, rather than replace, required sections. See the latest HANDOFF.md entries for visual and table-order corrections.

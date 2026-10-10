@@ -43,7 +43,7 @@ Use de-identified or synthetic data and supported domains with both suitable dat
 
 Read `AGENTS.md`, `PLAN.md`, `Rules.txt`, the proposal and template before writing. Keep required chapter/section order and titles. Never edit `FastFyp.cls` or add packages. `main.tex` now assembles only Chapters 1 through 6, References and Appendix under the explicitly approved scope update. It is frozen again. Title-page metadata and declaration names are populated. BS(CS) and 10 October 2026 are integration assumptions requiring team confirmation; signature spaces remain blank.
 
-Ordinary substantive prose: one 150-word paragraph per heading under the latest instruction. Brief table introductions, captions, table cells and feature bullets are exempt. Abstract: one paragraph, 50?125 words, three to five sentences. Executive Summary: one plain 150-word paragraph under the latest concise-writing instruction. Refer to every figure; use descriptive captions, automatic numbering and citations. Literature review needs at least 15 distinct verified relevant works.
+Ordinary substantive prose: one concise 150--250-word paragraph per substantive heading under the feedback revision. Brief table introductions, captions, table cells and feature bullets are exempt. Abstract: one paragraph, 50?125 words, three to five sentences. Executive Summary: approximately one page of plain paragraphs, each within 150--250 words. Refer to every figure; use descriptive captions, automatic numbering and citations. Literature review needs at least 15 distinct verified relevant works.
 
 Use normal design and requirement wording for prospective implementation and evaluation. The user approved removal of red PLANNED markers; preserve their status information without claiming completed work. Never invent references, results, resources or data access. Original bibliography examples are preserved in Report template/fypbib.bib but are not assembled into the project bibliography. Use citation prefixes `zeestA:`, `zeestB:`, `zeestC:` and one canonical owner for shared sources.
 
@@ -95,3 +95,11 @@ The user authorised this task-specific exception to member ownership and frozen 
 Compile from Report template/. The reviewed local PDF is `Report template/build/Zeest-An-Agentic-Medical-Copilot-FYP-I.pdf`; generated build output stays ignored. Upload the full repository structure to Overleaf, with Report template/main.tex selected as the main document.
 
 The build uses the original class's Times fonts and spacing. Local main.tex font-encoding commands restore Times under XeTeX, and header height is compensated to keep the text-body position unchanged. Declaration spacing was reduced so both declarations fit together. Automatic contents, figure/table lists and IEEE references are regenerated. Both physician navigation diagrams are retained.
+
+## Feedback revision, 10 October 2026
+
+The user authorised the full-report feedback fixes and a longer Executive Summary. The summary is one page with two plain paragraphs (177 and 170 words). Chapters 2, 4 and 6 now have numbered conclusions, preserving all existing required headings. Stakeholders Summary is prose. The literature summary uses a larger font, the requested caption and an explicit float boundary before its conclusion.
+
+GUI images use larger typography and exports measured to fit their actual content. Suitable frames share a page at full width; longer screens remain separate for readability. Both navigation views remain. Wide diagrams use enlarged, rotated illustrations through the class's existing graphicx support; A4 page size and margins are retained. Design diagrams use vector PDFs, and the domain model is monochrome. Editable PlantUML/SVG sources stay in esha/diagrams/ and report-ready assets in Report template/Figures/.
+
+The sharper Goal 3 image is the official UN icon; the original grid asset remains preserved. The template-required SDG heading and use-case diagram remain despite generic feedback that conflicts with the supplied template. Declaration signatures must be supplied by the students; no signatures or empirical results were invented.

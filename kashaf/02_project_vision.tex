@@ -5,7 +5,7 @@
 \fontencoding{T1}\selectfont
 \chapter{Project Vision}
 
-Zeest brings patient history, consultation documentation and clinical analysis into a physician-controlled workspace. The physician selects one of their patients and an encounter, reviews history and records the current consultation. Structured notes and supported imaging, laboratory and medication inputs provide the case information. Specialised processing and retrieved guidelines support a diagnosis and treatment draft, which is reviewed by the critic agent before presentation. The physician then decides whether to approve, modify or reject it. The vision is to preserve continuity across encounters while making findings, evidence and decision states understandable. Its value depends on the integration of capabilities and on examining their contributions through controlled comparisons. Each stage retains its patient, encounter and source associations, including corrected inputs and reviewed revisions. Supporting registration and account access make the workflow usable without adding another clinical role. Comparative evaluation then tests the integration rather than treating generated recommendations as established clinical conclusions.
+A project vision connects an identified problem with achievable objectives and clear boundaries. The following sections describe the problem domain, intended goals, scope, constraints and stakeholder needs that guide subsequent requirements and design decisions.
 
 \section{Problem Domain Overview}
 
@@ -13,7 +13,7 @@ Clinical decision support assists physicians in interpreting patient information
 
 \section{Problem Statement}
 
-Patient information is distributed across encounters and represented through notes, images, laboratory findings and medication records. An isolated input does not establish its relationship to earlier observations or the current consultation. Manual documentation creates additional preparation work, while generated recommendations are difficult to assess without supporting evidence and clinical context. These difficulties affect information continuity and accountable physician review: historical observations may be overlooked, incomplete inputs may be misunderstood, and suggested content may appear more established than its evidence permits. Physicians need to distinguish the current case from earlier history and identify the sources underlying each finding. They also need a clear separation between a generated diagnosis or treatment draft and a decision they have accepted. The central problem is maintaining these source relationships throughout consultation capture, analysis and recommendation review, while preserving the responsible physician's authority and an identifiable record of the actions taken for each patient and encounter.
+Patient information is distributed across encounters, notes, imaging, laboratory findings and medication records, while many analytical tools process isolated inputs. Manual consultation documentation adds further preparation work and makes it difficult to maintain a coherent longitudinal view. This fragmentation can leave earlier observations disconnected from the current consultation, increase repeated information gathering and make generated recommendations difficult to assess. Without visible sources and review states, a physician may struggle to distinguish established observations from unsupported suggestions or identify the evidence behind a treatment draft. Zeest addresses this problem by connecting patient-specific history, structured consultation notes and specialist findings within one physician-controlled workflow. Hybrid memory retrieves relevant historical context, while cited clinical evidence and critic review support inspection of generated diagnosis and treatment drafts. The physician retains responsibility for approval, modification or rejection, and only explicitly approved content becomes a recorded clinical decision. Evaluation must establish the effectiveness of this integrated approach.
 
 \section{Problem Elaboration}
 
@@ -23,7 +23,7 @@ Longitudinal continuity requires relevant retrieval rather than simply retaining
 
 The goal is to develop a physician-controlled medical copilot with longitudinal patient memory and coordinated multimodal reasoning. Consultation transcription supplies structured notes, specialist agents analyse supported inputs, and evidence retrieval grounds the generated diagnosis and treatment draft. Critic review and explicit physician decisions complete the connected clinical workflow. Table~\ref{tab:kashaf:objectives} lists the nine objectives covering this integration and its comparative evaluation. Memory and transcription establish the available information foundation; analysis, retrieval and reasoning prepare the recommendation; and approval controls preserve physician authority. The evaluation compares the single-language-model baseline, memory-augmented variant and full Zeest system to assess their contributions under consistent, clearly defined clinical assessment conditions. Each objective corresponds to identifiable requirements, component responsibilities and a verification activity. The comparison uses shared cases and an assessment process so changes in the available context do not become accidental differences in evaluation. Resource selection and clinical coverage remain explicit dependencies rather than additional objectives.
 
-\begin{table}[htbp]
+\begin{reporttable}
 \centering
 \small
 \caption{Zeest objectives covering memory, clinical processing, physician review and comparative evaluation.}
@@ -41,15 +41,15 @@ O7 & Review generated recommendations through the Safety and Critic Agent before
 O8 & Provide approval, modification and rejection controls with a full audit history. \\ \hline
 O9 & Compare a single LLM, a memory-augmented variant and the full Zeest system. \\ \hline
 \end{tabular}
-\end{table}
+\end{reporttable}
 
 % Finish this section's floats before the next heading.
-\clearpage
+
 \section{Project Scope}
 
 Zeest includes physician registration and access, patient navigation, encounter review, consultation transcription and structured-note correction. Each physician accesses only their own patient records. Its workflow combines hybrid memory, specialised agents, imaging and laboratory inputs, medication context, evidence retrieval and critic review. Generated diagnoses and treatment plans require physician approval before recording. Development and evaluation use de-identified or synthetic cases, and clinical domain coverage depends on suitable data and validated models. Table~\ref{tab:kashaf:scope} summarises the boundaries. Training diagnostic models from scratch, autonomous treatment, emergency and ICU systems, real-world deployment, regulatory approval, native mobile applications, patient-facing chat and the optional knowledge graph are excluded from the project scope. Supporting account functions do not introduce a separate administrative role or an external verification service. Patient ownership governs all related clinical operations, and draft revision links preserve the content reviewed. Clinical decisions remain separate from research outputs, even when both originate from the same encounter.
 
-\begin{table}[htbp]
+\begin{reporttable}
 \centering
 \small
 \caption{Included capabilities and exclusions defining the boundaries of Zeest.}
@@ -65,23 +65,24 @@ Evidence-supported drafts, critic review and physician decisions & Autonomous pr
 De-identified/synthetic cases and supported data/model domains & Unsupported domains, emergency/ICU systems and real-world deployment \\ \hline
 Controlled comparison of system variants & Regulatory approval and guaranteed clinical outcomes \\ \hline
 \end{tabular}
-\end{table}
+\end{reporttable}
 
 % Finish this section's floats before the next heading.
-\clearpage
+
 \section{Sustainable Development Goal (SDG)}
 
-Zeest aligns with Sustainable Development Goal 3, Good Health and Well-being, which promotes healthy lives and well-being for all ages.~\cite{zeestA:unSDG3} Its intended contribution is to support physicians through clearer access to patient history, structured consultation documentation and reviewable clinical recommendations. Longitudinal memory connects earlier observations with the current encounter, while supporting evidence and critic findings help the responsible physician inspect the generated draft. Explicit approval keeps the clinical decision under professional judgement. Figure~\ref{fig:1} identifies Goal 3 within the seventeen Sustainable Development Goals. This alignment guides the focus on physician assistance; health-outcome improvements remain a matter for evaluation rather than an assumed result. The focus is assistance within a controlled clinical workflow rather than a claim that the integrated system already changes patient outcomes. Data permissions, supported model coverage and professional physician review limit the interpretation of this contribution. Comparative results are required before stronger statements about effectiveness can be made.
+Zeest aligns with Sustainable Development Goal 3, Good Health and Well-being, which promotes healthy lives and well-being for all ages.~\cite{zeestA:unSDG3} Its intended contribution is to support physicians through clearer access to patient history, structured consultation documentation and reviewable clinical recommendations. Longitudinal memory connects earlier observations with the current encounter, while supporting evidence and critic findings help the responsible physician inspect the generated draft. Explicit approval keeps the clinical decision under professional judgement. Figure~\ref{fig:1} shows the Good Health and Well-being goal. This alignment guides the focus on physician assistance; health-outcome improvements remain a matter for evaluation rather than an assumed result. The focus is assistance within a controlled clinical workflow rather than a claim that the integrated system already changes patient outcomes. Data permissions, supported model coverage and professional physician review limit the interpretation of this contribution. Comparative results are required before stronger statements about effectiveness can be made.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.28\textwidth,trim=159.75bp 142.50bp 228.75bp 9.00bp,clip]{Figures/Picture1}
-\caption{Sustainable Development Goal 3: Good Health and Well-being.}
+\includegraphics[width=0.28\textwidth]{Figures/kashaf_sdg3.png}
+\caption{Good Health and Well-being.}
+{\small\itshape Supporting physician review through longitudinal patient information and evidence-grounded clinical assistance.\par}
 \label{fig:1}
 \end{figure}
 
 % Finish this section's floats before the next heading.
-\clearpage
+
 \section{Constraints}
 
 Clinical coverage depends on suitable case data, validated existing models and permitted resource use. Imaging integration must respect the selected model's input requirements and supported labels. Transcription depends on language coverage and audio conditions, while guideline retrieval and medication review require appropriate knowledge resources. Consistent interfaces must connect the backend, orchestration frameworks, language model and memory layer. The division between LangGraph and Google ADK requires detailed design agreement, and the embedding model must be compatible with the semantic store. Hardware and service arrangements affect performance, so numerical limits need a defined environment. Physician approval remains mandatory regardless of the selected components or supported clinical domain. A missing resource cannot be replaced with fabricated findings or citations. Model-dependent vector dimensions, supported file formats and service limits must be documented after selection. Evaluation must retain those settings with the selected case configuration so later comparisons can distinguish component effects from environmental differences.
@@ -96,27 +97,14 @@ Physicians are the direct users and reviewers of Zeest. They need readable notes
 
 \subsection{Stakeholders Summary}
 
-Table~\ref{tab:kashaf:stakeholders} summarises the responsibilities and interests of the principal stakeholders.
+Physicians are the direct users of Zeest and are responsible for interpreting findings and deciding whether to accept a clinical draft. Their interests include readable consultation notes, relevant history, visible evidence and clear review controls. Patients are affected stakeholders whose information must remain associated with the correct physician and encounter; their role does not include a conversational interface in this scope. The student development team is responsible for translating the agreed requirements into compatible components, maintaining source relationships and preparing reproducible evaluation configurations. The supervisor and evaluation panel assess the clinical motivation, scope, technical rationale and evidence supporting the research contribution. These responsibilities are complementary: clinical users require understandable assistance, patients require appropriate information handling, and academic stakeholders require a justified design and controlled comparison method. Their common interest is an accountable workflow that preserves professional judgement while making the contribution of memory, specialised processing and review mechanisms assessable through future implementation and evaluation.
 
-\begin{table}[htbp]
-\centering
-\small
-\caption{Stakeholder responsibilities and principal interests in Zeest.}
-\label{tab:kashaf:stakeholders}
-\begin{tabular}{|p{0.2\textwidth}|p{0.28\textwidth}|p{0.39\textwidth}|}
-\hline
-Stakeholder & Responsibility/relationship & Principal interest \\ \hline
-Physician & Direct user and reviewer of clinical recommendations & Relevant context, clear findings, inspectable evidence and control over recorded decisions. \\ \hline
-Patient & Subject of clinical information and affected stakeholder & Appropriate information handling and physician oversight of recommendations. \\ \hline
-Student team & System development and research integration & Consistent requirements, component interfaces and reproducible comparisons. \\ \hline
-Supervisor and evaluation panel & Academic guidance and assessment & Justified scope, technical decisions and evidence addressing the research questions. \\ \hline
-\end{tabular}
-\end{table}
-
-% Finish this section's floats before the next heading.
-\clearpage
 \subsection{Key High-Level Goals and Problems of Stakeholders}
 
 Physicians need relevant history, reliable consultation notes and inspectable findings without losing the current patient context. Their main challenge is to assess information from several sources and determine whether it supports the generated draft. Patients need their information associated with the correct case and decisions reviewed by the responsible physician. The development team must connect processing components without creating ambiguous outputs or approval states. Academic reviewers need controlled comparisons that make the contributions of memory, agents, critic review and multimodal information assessable. Zeest addresses these needs through case continuity, identifiable source relationships and explicit review controls, with evaluation determining the usefulness of the integrated approach. The resulting vision connects clinical continuity with an accountable review boundary and a defined research comparison. It avoids assuming that more agents necessarily produce better recommendations. Resource permissions, supported tasks and measured component contributions determine whether the integrated design fulfils these stakeholder goals in practice.
+
+\section{Conclusion}
+
+Zeest's vision connects continuity of patient information with a physician-controlled clinical workflow. Longitudinal memory supplies relevant historical context, consultation transcription supports documentation, and specialised agents contribute findings from supported clinical inputs. Retrieved evidence and critic review accompany a diagnosis and treatment draft, while approval determines which reviewed revision becomes an accepted decision. These responsibilities define the integration objective without assuming that additional agents necessarily improve clinical recommendations. The scope also establishes practical boundaries: permitted de-identified or synthetic cases, existing validated models, supported clinical domains and no autonomous treatment or real clinical deployment. Physicians need understandable information and control over decisions, patients need appropriate handling of their records, and the development and academic teams need consistent requirements and assessable comparisons. Resource selection and implementation remain dependencies for testing these goals. The resulting vision provides a clear basis for the requirements, methodology and design, with component value determined through controlled evaluation rather than architectural complexity alone.
 
 \endgroup

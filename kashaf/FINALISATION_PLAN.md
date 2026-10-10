@@ -115,3 +115,11 @@ Front matter uses the source names/title/advisor. BS(CS) and 10 October 2026 are
 The final PDF, build checks and scoped changes are recorded in the member handoffs. Bibliography metadata corrections were checked against primary publication pages. The final PDF is generated output under Report template/build/ and remains ignored by Git. No commit, push or publication was performed.
 
 Final validation: Tectonic exit 0; 115 pages, 35 figures and 67 tables. No undefined references/citations, duplicate labels, overfull boxes or oversized floats. All figures are referenced. Contents links and first-page entries for multi-page lists were checked. FastFyp.cls is unchanged, no packages were added, and git diff --check passes. Existing template/package font-shape and underfull-table warnings are not claims of layout failure; visually reviewed output retains Times and the class formatting.
+
+## Subsequent approved feedback revision
+
+The user authorised applying the supplied feedback, allowing longer paragraphs up to 250 words where needed, especially in the Executive Summary. The summary now fills one page with two plain paragraphs. Numbered conclusions were added in Chapters 2, 4 and 6. Stakeholders Summary is prose. Larger GUI text, measured crops, full-width pairing, vector design diagrams, landscape-oriented illustrations, a monochrome domain model and a sharp official SDG icon address visibility. The literature table has a larger font and now precedes its conclusion.
+
+Required template headings and the use-case diagram are retained where generic feedback conflicts with the template. No packages were added and FastFyp.cls remains untouched. Student signatures and confirmation of the existing degree/date assumptions remain human submission tasks. No implementation, data access or empirical results were invented. Normal file ownership resumes after this approved integration; no commit or push was performed.
+
+Feedback build validation: 114 pages; 35 figures; 66 tables. Tectonic exits successfully. No undefined references, missing figure references, duplicate labels, overfull boxes or oversized floats. All six conclusions are numbered in the contents; the literature table precedes its conclusion. Ordinary substantive paragraphs remain within 150--250 words. FastFyp.cls is unchanged; no packages were added.

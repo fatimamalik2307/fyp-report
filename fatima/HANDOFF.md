@@ -45,3 +45,17 @@ Final integration preserved the completed Chapters 3/5 and wrote the Abstract fr
 Methodology FR identifiers match FR01--FR44: memory FR23--FR25, inputs FR14--FR22, specialists FR26--FR30, drafting/evidence/critic FR31--FR37 and physician review FR38--FR43. Approved-decision viewing remains FR44. The comparison diagram/table includes the three primary variants and critic/multimodal contrasts. The extra evidence contrast was removed. Case preparation precedes specialist analysis. Resource permissions and measurements remain outstanding execution dependencies.
 
 No commit or push was performed. main.tex is frozen again after this integration. Degree BS(CS) and date 10 October 2026 are assumptions to confirm before submission; signature spaces were preserved.
+
+## Approved feedback revision, 10 October 2026
+
+Preserved the existing literature content and compulsory Abstract. Enlarged the literature table font, used the requested summary caption, aligned row order with the reviews and flushed the table before the Chapter 3 conclusion. The template-required hierarchy remains; parent headings with populated subsections are organisational headings, not empty discarded sections.
+
+This is a user-authorised cross-member integration exception. Normal ownership and main.tex freezing resume after the task. The prototype remains unbuilt. No commit or push was performed.
+
+
+Latest correction: all rotated report figures removed at user request. Illustrations are upright on portrait pages; primary navigation uses two columns. Literature glossary ReAct row repaired.
+
+
+User-approved spacing revision: short neutral chapter introductions; no manual section page breaks; tables remain in source order. Abstract and Executive Summary retained as template pages but removed from TOC. Acronyms use definition lines. Appendix introduction condensed; SDG caption and explanatory line added; problem statement follows problem, effect and solution.
+
+User-requested caption styling: added a short italic explanation below the literature summary table caption.

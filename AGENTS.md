@@ -12,4 +12,6 @@ Preserve supplied documents and original template assets. Local generated output
 
 Kashaf requires approval at each step: review two chapter outlines together in chat, wait for approval, draft in chat, then wait for approval before saving. Kashaf's prose uses Zeest with capital Z and no em dashes. Do not apply personal rules by editing another owner's files.
 
-Final integration exception: the user authorised cross-member and main.tex edits for the completed finalisation task. Normal ownership and assembly restrictions resume afterward. The latest prose rule is one 150-word substantive paragraph per heading; captions, table cells, bullets, brief table introductions and the 50--125-word Abstract follow their special formats.
+Final integration exception: the user authorised cross-member and main.tex edits for the completed finalisation task. Normal ownership and assembly restrictions resume afterward. Feedback revision approved 10 October 2026 permits 150--250-word substantive paragraphs where needed; keep ordinary body sections concise and allow the Executive Summary about one page of plain paragraphs; captions, table cells, bullets, brief table introductions and the 50--125-word Abstract follow their special formats.
+
+The user authorised the current whole-report feedback revision across member folders and the necessary main.tex changes. Keep required headings, the untouched class and existing packages; numbered conclusions supplement the retained structure. Routine ownership restrictions resume after this task.

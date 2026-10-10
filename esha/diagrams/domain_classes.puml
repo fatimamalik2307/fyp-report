@@ -1,13 +1,17 @@
 @startuml esha_D09_domain_classes
 skinparam dpi 300
 skinparam shadowing false
+skinparam monochrome true
 skinparam classAttributeIconSize 0
 skinparam defaultFontName Arial
-skinparam defaultFontSize 14
+skinparam defaultFontSize 16
+skinparam classFontSize 18
+skinparam classAttributeFontSize 16
+skinparam ArrowFontSize 14
 hide methods
-skinparam linetype ortho
+skinparam linetype polyline
 top to bottom direction
-package "Accounts and clinical sources" {
+package "Accounts and clinical sources" as ClinicalGroup {
 class Physician {
   physician_id : UUID
 }
@@ -31,7 +35,7 @@ class SpecialistFinding {
   finding_id : UUID
 }
 }
-package "Drafts and evidence" {
+package "Drafts and evidence" as DraftGroup {
 class Proposal {
   proposal_id : UUID
   encounter_id : UUID
@@ -55,7 +59,7 @@ class ProposalEvidence {
   proposal_revision : integer
 }
 }
-package "Review and memory" {
+package "Review and memory" as ReviewGroup {
 class PhysicianAction {
   action_id : UUID
   physician_id : UUID
@@ -68,7 +72,7 @@ class SemanticMemory {
   decision_id : UUID
 }
 }
-package "Research evaluation" {
+package "Research evaluation" as EvaluationGroup {
 class EvaluationCase {
   case_id : UUID
   encounter_id : UUID
@@ -80,11 +84,11 @@ class EvaluationOutput {
   output_id : UUID
 }
 }
-Physician "1" -- "0..N" Patient : owns
-Patient "1" -- "0..N" Encounter : has
-Encounter "1" -- "0..N" ClinicalInput : contains
-ClinicalInput "1" -- "1..N" InputRevision : versions
-InputRevision "1" -- "0..N" SpecialistFinding : analysed by
+Physician "1" -right- "0..N" Patient : owns
+Patient "1" -down- "0..N" Encounter : has
+Encounter "1" -left- "0..N" ClinicalInput : contains
+ClinicalInput "1" -down- "1..N" InputRevision : versions
+InputRevision "1" -right- "0..N" SpecialistFinding : analysed by
 Encounter "1" -- "0..N" Proposal : produces
 Proposal "1" -- "1..N" ProposalRevision : versions
 ProposalRevision "1" -- "0..N" ProposalInput : uses
@@ -101,4 +105,7 @@ ClinicalDecision "0..1" -- "0..N" SemanticMemory : represented by
 Encounter "1" -- "0..N" EvaluationCase : provides
 EvaluationCase "1" -- "0..N" EvaluationOutput : evaluated in
 EvaluationRun "1" -- "0..N" EvaluationOutput : records
+ClinicalGroup -[hidden]right- DraftGroup
+ClinicalGroup -[hidden]down- EvaluationGroup
+DraftGroup -[hidden]down- ReviewGroup
 @enduml
