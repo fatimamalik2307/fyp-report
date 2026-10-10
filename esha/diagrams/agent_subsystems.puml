@@ -37,7 +37,7 @@ skinparam arrow {
     FontSize 10
 }
 
-title Proposed Specialist Agent Subsystems (D08)
+title Specialist Agent Subsystem Architecture
 
 component [Workflow Orchestrator\nShared encounter context and status] as Engine
 
@@ -59,6 +59,8 @@ package "3  Evidence, Synthesis and Review" as GovernancePkg {
 }
 
 Engine --> PMAgent : retrieve
+Engine --> CCAgent : saved current inputs
+CCAgent --> ReasoningAgent : prepared case
 PMAgent --> CCAgent : history
 CCAgent --> ImgAgent : case context
 CCAgent --> LabAgent
@@ -70,10 +72,5 @@ CCAgent --> RAGAgent : evidence query
 RAGAgent --> ReasoningAgent : citations
 ReasoningAgent --> CriticAgent : draft proposal
 CriticAgent --> Engine : reviewed package
-
-note right of Engine
-  Scheduling and failure handling remain proposed.
-  Agent contracts identify inputs, outputs and source context.
-end note
 
 @enduml

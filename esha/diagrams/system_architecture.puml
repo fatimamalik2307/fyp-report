@@ -30,15 +30,20 @@ FontColor #2D3748
 FontSize 12
 }
 
-title Proposed Zeest System Architecture (D07)
+title Zeest System Architecture
 
-package "Physician Application" as ClientLayer {
+actor Physician
+
+package "Web Client" as ClientLayer {
   component [Next.js Web Interface\nConsultation | Case | Review | Audit] as WebUI
+}
+
+package "Application Backend" as BackendLayer {
   component [FastAPI Gateway\nAuthentication | Validation | Routing] as API
   WebUI --> API : HTTPS / WebSocket
 }
 
-package "Proposed Agent Layer" as AgentLayer {
+package "Agent Processing" as AgentLayer {
   component [Workflow Orchestrator\nLangGraph / Google ADK role split: TBD] as Orchestrator
   component [Context Agents\nPatient Memory | Clinical Case] as ContextAgents
   component [Specialist Agents\nImaging | Laboratory | Medication Safety] as SpecialistAgents
@@ -53,6 +58,7 @@ package "Models and External Evidence" as Models {
   component [Gemini\nReasoning API] as GeminiModel
   component [Validated Imaging Classifier\nPyTorch checkpoint: TBD] as ImagingModel
   database "External Clinical Guidelines" as Guidelines
+  database "Medication Knowledge Resource" as MedicationKB
   Transcriber -[hidden]down-> GeminiModel
   GeminiModel -[hidden]down-> ImagingModel
   ImagingModel -[hidden]down-> Guidelines
@@ -60,9 +66,11 @@ package "Models and External Evidence" as Models {
 
 package "Hybrid Patient Memory" as DataLayer {
   database "PostgreSQL\nEncounters | Proposals | Decisions | Audit" as PostgreSQL
-  database "pgvector\nPatient Memory | Evidence Index" as Pgvector
+  database "pgvector Extension\nPatient Memory | Evidence Index" as Pgvector
 }
 
+Physician --> WebUI : Clinical workflow
+SpecialistAgents --> MedicationKB : Medication checks
 API --> Orchestrator : Structured case request
 API --> Transcriber : Consultation audio
 ContextAgents --> PostgreSQL : Longitudinal records
@@ -72,6 +80,9 @@ ReviewAgents --> GeminiModel : Reasoning and critique
 ReviewAgents --> Guidelines : Cited evidence
 ReviewAgents --> Pgvector : Evidence retrieval
 API --> PostgreSQL : Approved decision and audit
-PostgreSQL --> Pgvector : Authorised input revisions / approved decisions
+component [Memory Indexer] as Indexer
+API --> Indexer : Authorised input revisions / approved decisions
+Indexer --> Pgvector : Store source-linked embeddings
+PostgreSQL -- Pgvector : Relational and vector storage
 
 @enduml

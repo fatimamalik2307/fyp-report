@@ -58,3 +58,7 @@ Latest correction: all rotated report figures removed at user request. Illustrat
 
 
 User-approved spacing revision: short neutral chapter introductions; no manual section page breaks; tables remain in source order. Abstract and Executive Summary retained as template pages but removed from TOC. Acronyms use definition lines. Appendix introduction condensed; SDG caption and explanatory line added; problem statement follows problem, effect and solution.
+
+User-approved simplification: assumptions and constraints use concise bullets; the assumptions table and its Effect if absent column were removed. Design goals and dependencies also use bullets; explanatory sections remain prose.
+
+User-approved diagram review: removed sequence note boxes; separated web client/backend; identified pgvector as an extension; added medication knowledge and memory indexing connections; made current-input and prepared-case handoffs explicit in subsystem architecture.

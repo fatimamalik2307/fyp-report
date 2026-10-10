@@ -222,27 +222,15 @@ NFR16 & Reuse & Replacing a specialist integration shall preserve its agreed int
 
 \section{Assumptions}
 
-Table~\ref{tab:kashaf:assumptions} records the operating assumptions.
-
-\begin{reporttable}
-\centering
-\small
-\caption{Operating assumptions and their effect on the physician workflow.}
-\label{tab:kashaf:assumptions}
-\begin{tabular}{|p{0.09\textwidth}|p{0.44\textwidth}|p{0.35\textwidth}|}
-\hline
-ID & Assumption & Effect if absent \\ \hline
-A01 & The physician completes registration before accessing protected records. & Login requires successful registration. \\ \hline
-A02 & Patient records belong to their responsible physician and encounters have consistent identifiers. & Ownership and case context cannot be checked reliably. \\ \hline
-A03 & The physician can interpret findings and review a clinical draft. & The intended clinical review and approval workflow cannot be completed. \\ \hline
-A04 & The audio device is available and capture permission is granted. & Consultation recording cannot begin; a clear failure state is required. \\ \hline
-A05 & Inputs use representations supported by the selected components. & Unsupported input is rejected rather than treated as analysed information. \\ \hline
-A06 & Required processing services and knowledge resources are accessible. & Affected analysis or retrieval is reported as unavailable. \\ \hline
-A07 & Permitted de-identified or synthetic cases support the selected domain. & The domain cannot be used for the intended development/evaluation. \\ \hline
-\end{tabular}
-\end{reporttable}
-
-% Finish this section's floats before the next heading.
+\begin{itemize}
+\item Physicians register before accessing protected patient records.
+\item Each patient belongs to a responsible physician and has identified encounters.
+\item Physicians can interpret findings and review clinical drafts.
+\item An audio device and recording permission are available for consultation capture.
+\item Clinical inputs match the formats supported by the selected components.
+\item Required processing services and knowledge resources are accessible.
+\item Permitted de-identified or synthetic cases cover the selected clinical domain.
+\end{itemize}
 
 \section{Use Cases}
 

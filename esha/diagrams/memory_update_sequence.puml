@@ -15,12 +15,6 @@ skinparam sequence {
   ParticipantFontColor #1A202C
   ParticipantFontStyle bold
 }
-skinparam note {
-  BackgroundColor #FEFCBF
-  BorderColor #B7791F
-  FontColor #744210
-  FontSize 12
-}
 title Proposed Approval and Patient-Memory Update Sequence (D12)
 
 actor Physician as Doctor
@@ -38,7 +32,6 @@ API -> Decision : Record revision + MODIFY action
 Decision -> Record : Persist pending revision and audit snapshot
 Record --> Decision : Saved
 Decision --> UI : Return revised PENDING proposal
-note over Record, Memory : Modification does not update the clinical decision or patient memory.
 == Approve: clinical record then memory ==
 Doctor -> UI : Approve reviewed revision (UC17)
 UI -> API : Submit explicit approval
@@ -61,9 +54,4 @@ API -> Decision : Record REJECT action
 Decision -> Record : Mark rejected + retain audit snapshot (FR40, FR42)
 Record --> Decision : Rejection recorded
 Decision --> UI : Display rejected status
-note over Record, Memory
-  Authorised input revisions have separate source links.
-  Pending and rejected proposals are excluded from
-  ClinicalDecision and semantic patient memory.
-end note
 @enduml

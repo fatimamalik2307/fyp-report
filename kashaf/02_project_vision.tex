@@ -85,7 +85,17 @@ Zeest aligns with Sustainable Development Goal 3, Good Health and Well-being, wh
 
 \section{Constraints}
 
-Clinical coverage depends on suitable case data, validated existing models and permitted resource use. Imaging integration must respect the selected model's input requirements and supported labels. Transcription depends on language coverage and audio conditions, while guideline retrieval and medication review require appropriate knowledge resources. Consistent interfaces must connect the backend, orchestration frameworks, language model and memory layer. The division between LangGraph and Google ADK requires detailed design agreement, and the embedding model must be compatible with the semantic store. Hardware and service arrangements affect performance, so numerical limits need a defined environment. Physician approval remains mandatory regardless of the selected components or supported clinical domain. A missing resource cannot be replaced with fabricated findings or citations. Model-dependent vector dimensions, supported file formats and service limits must be documented after selection. Evaluation must retain those settings with the selected case configuration so later comparisons can distinguish component effects from environmental differences.
+\begin{itemize}
+\item Clinical coverage depends on permitted cases and validated existing models.
+\item Imaging inputs must match the selected model's task and supported labels.
+\item Transcription depends on supported languages and adequate audio quality.
+\item Evidence retrieval and medication review require suitable knowledge resources.
+\item Connected components must use compatible interfaces and representations.
+\item LangGraph and Google ADK responsibilities require a defined integration design.
+\item Performance limits depend on the selected hardware and processing services.
+\item Clinical decisions require explicit physician approval.
+\item Model formats, vector dimensions and service settings must be documented.
+\end{itemize}
 
 \section{Business Opportunity}
 

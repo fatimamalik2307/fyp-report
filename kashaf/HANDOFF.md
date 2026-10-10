@@ -191,3 +191,5 @@ Latest correction: all rotated report figures removed at user request. Illustrat
 
 
 User-approved spacing revision: short neutral chapter introductions; no manual section page breaks; tables remain in source order. Abstract and Executive Summary retained as template pages but removed from TOC. Acronyms use definition lines. Appendix introduction condensed; SDG caption and explanatory line added; problem statement follows problem, effect and solution.
+
+User-approved simplification: assumptions and constraints use concise bullets; the assumptions table and its Effect if absent column were removed. Design goals and dependencies also use bullets; explanatory sections remain prose.

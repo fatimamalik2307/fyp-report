@@ -29,5 +29,4 @@ Agents -> Agents : Critic findings before presentation (FR35)
 Agents -> Store : Save pending revision, evidence and critic links
 Agents --> UI : Draft, citations, findings and stage status
 UI --> Physician : Review draft, evidence and critic findings (UC13-UC15)
-note over UI, Store : A pending draft is not an accepted clinical decision.
 @enduml
